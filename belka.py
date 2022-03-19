@@ -1,3 +1,6 @@
+from PIL import Image
+
+
 def create_alf():
     alf = []
     for r in prealf:
@@ -43,9 +46,16 @@ b = b[:9216]
 b.reverse()
 v = 0
 m = []
+img = Image.new('RGBA', (width, height), 'white')
+
+pix = img.load()
 for i in range(height):
     m.append([])
     for j in range(width):
         m[-1].append(b[v])
         v += 1
+for i in range(height):
+    for j in range(width):
+        pix[j, i] = prealf.index(m[i][j][0]) * 8, prealf.index(m[i][j][1]) * 8, prealf.index(m[i][j][2]) * 8
+img.save('im.png')
 print(*m, sep='\n')
