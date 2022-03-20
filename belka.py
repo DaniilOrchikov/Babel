@@ -1,4 +1,5 @@
 from PIL import Image
+import hashlib
 
 
 def create_alf():
@@ -10,52 +11,43 @@ def create_alf():
     return alf
 
 
-def lcg():
-    a = 474748
-    c = l
-    m = 32768 ** 196608
-    global seed
-    seed = (a * seed + c) % m
-    return seed
-
-
-prealf = '0123456789abcdefghijklmnopqrstuv'
+prealf = '0123456789abcdef'
 
 alf = create_alf()
 lalf = len(alf)
 
-width = 72
-height = 128
+width = 208
+height = 320
 
-l = (len(prealf) ** 3 * 2) ** (width * height)
+l = ((len(prealf) ** 3 * 2) ** (width * height)) - 1
 
-room = '19832835253283383535385258533323232532'
-rack = '17877887877878786675645332456768654323454677889876544678987867543456778765435678987654678'
-shelf = '1432342343443232232423324'
-book = '1432432343443342344'
-page = '143242334243432243'
+room = str(301**465)
+rack = hashlib.sha512('3'.encode()).hexdigest()
+shelf = hashlib.sha512('2'.encode()).hexdigest()
+book = hashlib.sha512('7'.encode()).hexdigest()
+page = hashlib.sha512('1'.encode()).hexdigest()
 
-seed = int(room + rack + shelf + book + page)
+num = int(room) ** 400 * int(rack, 16) ** 200 * int(shelf, 16) ** 200 * int(book, 16) ** 200 * int(page, 16) ** 200
+print(len(str(num)))
 
-num = lcg()
-b = []
-while num:
-    b.append(alf[num % lalf])
-    num //= lalf
-b = b[:9216]
-b.reverse()
-v = 0
-m = []
-img = Image.new('RGBA', (width, height), 'white')
-
-pix = img.load()
-for i in range(height):
-    m.append([])
-    for j in range(width):
-        m[-1].append(b[v])
-        v += 1
-for i in range(height):
-    for j in range(width):
-        pix[j, i] = prealf.index(m[i][j][0]) * 8, prealf.index(m[i][j][1]) * 8, prealf.index(m[i][j][2]) * 8
-img.save('im.png')
-print(*m, sep='\n')
+# b = []
+# while num:
+#     b.append(alf[num % lalf])
+#     num //= lalf
+# b = b[:width * height]
+# b.reverse()
+# v = 0
+# m = []
+# img = Image.new('RGBA', (width, height), 'white')
+#
+# pix = img.load()
+# for i in range(height):
+#     m.append([])
+#     for j in range(width):
+#         m[-1].append(b[v])
+#         v += 1
+# for i in range(height):
+#     for j in range(width):
+#         pix[j, i] = prealf.index(m[i][j][0]) * 8, prealf.index(m[i][j][1]) * 8, prealf.index(m[i][j][2]) * 8
+# img.save('im.png')
+# # print(*m, sep='\n')
