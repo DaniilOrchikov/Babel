@@ -45,9 +45,9 @@ class Babel:
         self.alphabet = self.digs = create_alf(self.prealf)
         self.alphabet.insert(0, self.alphabet.pop())
         self.lalf = len(self.alphabet)
-        self.lengthOfTitle = len(self.alphabet) - 1#66560
+        self.lengthOfTitle = len(self.alphabet) - 1  # 66560
 
-        self.width, self.height = 440, 360
+        self.width, self.height = 360, 310
         self.lengthOfPage = self.width * self.height
 
         self.wall = 4
@@ -59,14 +59,27 @@ class Babel:
         self.alfIndexes = {}
         self.create_indexes()
 
-    def createStr(self, pix, width, height):
+    def createStr(self, path):
+        im = Image.open(path)
+        width, height = im.size
+        if width > self.width and height > self.height:
+            im = im.resize((self.width, self.height), Image.NEAREST)
+        else:
+            width, height = im.size
+            if width > self.width:
+                im = im.resize((self.width, height), Image.NEAREST)
+            width, height = im.size
+            if height > self.height:
+                im = im.resize((width, self.height), Image.NEAREST)
+        pix = im.load()
+        width, height = im.size
         st = ''
         for i in range(height):
             for j in range(width):
                 r, g, b = pix[j, i]
                 r, g, b = r // 8, g // 8, b // 8
                 st += self.prealf[r] + self.prealf[g] + self.prealf[b]
-        return st
+        return st, width, height
 
     def create_im(self, address):
         img = Image.new('RGBA', (self.width, self.height), 'white')
@@ -208,17 +221,16 @@ babel = Babel()
 # text = ''.join(babel.alphabet[random.randrange(0, len(babel.alphabet) // 2)] for i in range(100000))
 # text = '000' * 900
 # width, height = 30, 30
-im = Image.open('im2.png')
-pix = im.load()
-width, height = im.size
-text = babel.createStr(pix, width, height)
-
+text, width, height = babel.createStr('im1.png')
 address = babel.search(text, width, height)
 # print(babel.getPage(address) == text)
 # address1 = babel.search(text, wi)
 # print(address1 == address)
 # print(babel.getPage(address) == babel.getPage(address1))
+# print(address)
 babel.create_im(address)
+# title = babel.getTitle(address)
+# babel.create_im(babel.search(babel.getPage(babel.searchTitle(title) + '-' + address.split('-')[-1]), babel.width, babel.height))
 # # print(address)
 # a = babel.getTitle(address)
 # st = address.split('-')[-1]
