@@ -41,7 +41,6 @@ class Babel:
         self.seed = 13
         self.prealf = '0123456789abcdefghijklmnopqrstuv'
 
-        # self.alf = create_alf(prealf)
         self.alphabet = self.digs = create_alf(self.prealf)
         self.alphabet.insert(0, self.alphabet.pop())
         self.lalf = len(self.alphabet)
@@ -217,7 +216,8 @@ class Babel:
 
 
 babel = Babel()
-# text = ''.join([i for _ in range(1) for i in babel.alphabet])  # градиент
+# text = ''.join([i for _ in range(20) for i in babel.alphabet])[:babel.lengthOfPage] # градиент
+# width, height = 186, 200
 # text = ''.join(babel.alphabet[random.randrange(0, len(babel.alphabet) // 2)] for i in range(100000))
 # text = '000' * 900
 # width, height = 30, 30
