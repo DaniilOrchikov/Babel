@@ -104,7 +104,7 @@ class Babel:
         return st, width, height
 
     def create_im(self, address):
-        img = Image.new('RGBA', (self.width, self.height), 'white')
+        img = Image.new('RGB', (self.width, self.height), 'white')
         pix = img.load()
         m = []
         v = 0
