@@ -47,6 +47,7 @@ class Babel:
     def __init__(self):
         self.seed = 13
         self.prealf = '0123456789abcdefghijklmnopqrstuv'
+        self.number_of_colors = len(self.prealf)
 
         self.alphabet, self.digs, self.readable_alphabet = create_alf(self.prealf)
         self.alphabet.insert(0, self.alphabet.pop())
@@ -96,7 +97,9 @@ class Babel:
         for i in range(height):
             for j in range(width):
                 r, g, b = pix[j, i]
-                r, g, b = r // 8, g // 8, b // 8
+                r, g, b = r // (256 // self.number_of_colors), \
+                          g // (256 // self.number_of_colors), \
+                          b // (256 // self.number_of_colors)
                 st += self.prealf[r] + self.prealf[g] + self.prealf[b]
         return st, width, height
 
@@ -113,8 +116,9 @@ class Babel:
                 v += 1
         for i in range(self.height):
             for j in range(self.width):
-                pix[j, i] = self.prealf.index(m[i][j][0]) * 8, self.prealf.index(m[i][j][1]) * 8, self.prealf.index(
-                    m[i][j][2]) * 8
+                pix[j, i] = self.prealf.index(m[i][j][0]) * (256 // self.number_of_colors), \
+                            self.prealf.index(m[i][j][1]) * (256 // self.number_of_colors), \
+                            self.prealf.index(m[i][j][2]) * (256 // self.number_of_colors)
         img.save('im.png')
 
     def rnd(self, mn=1, mx=0):
@@ -129,6 +133,11 @@ class Babel:
             self.alfIndexes[char] = pos
         for pos, char in enumerate(self.readable_alphabet):
             self.readable_alphabetIndexes[char] = pos
+
+    def get_random_im(self):
+        title = [self.readable_alphabet[random.randint(0, len(self.digs))] for _ in range(self.lengthOfTitle)]
+        address = self.search_title(title) + '-' + str(random.randint(1, self.page))
+        self.create_im(address)
 
     def search(self, searchStr, width, height):
         wall = str(int(random.random() * self.wall + 1))
@@ -173,10 +182,10 @@ class Babel:
         for i in range(self.height - height):
             searchArr.append([])
             for j in range(width):
-                searchArr[-1].append('000')
+                searchArr[-1].append(self.alphabet[-1])
         for i in range(self.height):
             for j in range(self.width - width):
-                searchArr[i].append('000')
+                searchArr[i].append(self.alphabet[-1])
         searchStr = ''.join(np.array(searchArr).flatten())
         return self.search(searchStr, self.width, self.height)
 
@@ -239,31 +248,9 @@ class Babel:
 
 
 babel = Babel()
-# text = ''.join([i for _ in range(20) for i in babel.alphabet])[:babel.lengthOfPage] # градиент
-# width, height = 186, 200
-# text = ''.join(babel.alphabet[random.randrange(0, len(babel.alphabet) // 2)] for i in range(100000))
-# text = '000' * 900
-# width, height = 30, 30
+
 text, width, height = babel.create_str('im1.png')
 address = babel.search(text, width, height)
 babel.create_im(address)
-# print(babel.getPage(address) == text)
-# address1 = babel.search(text, wi)
-# print(address1 == address)
-# print(babel.getPage(address) == babel.getPage(address1))
-# print(address)
 
-title = 'Hello? world!'
-address1 = babel.search_title(title)
-print(babel.get_title(address1))
-babel.create_im(address1 + '-1')
-
-# title = babel.getTitle(address)
-# babel.create_im(babel.search(babel.getPage(babel.searchTitle(title) + '-' + address.split('-')[-1]), babel.width, babel.height))
-# # print(address)
-# a = babel.getTitle(address)
-# st = address.split('-')[-1]
-# # print(a)
-# newaddress = babel.searchTitle(a) + '-' + st
-# print(newaddress.split('-')[1:], address.split('-')[1:])
-# babel.create_im(newaddress)
+# babel.get_random_im()
