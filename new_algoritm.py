@@ -46,7 +46,7 @@ def pad(s, size):
 class Babel:
     def __init__(self):
         self.seed = 13
-        self.prealf = '0123456789abcdefghijklmnopqrstuv'
+        self.prealf = '0123456789abcdefghijklmnopqrstuv'  # неьзя использовать '-'
         self.number_of_colors = len(self.prealf)
 
         self.alphabet, self.digs, self.readable_alphabet = create_alf(self.prealf)
@@ -66,6 +66,9 @@ class Babel:
         self.alfIndexes = {}
         self.readable_alphabetIndexes = {}
         self.create_indexes()
+
+    def search_by_location(self, hex, wall, shelf, volume, page):
+        return self.alphabet[0] * (111600 - len(hex)) + str(hex) + '-' + str(wall) + '-' + str(shelf) + '-' + str(int(volume)) + '-' + str(int(page))
 
     def from_readable_title(self, title):
         new_title = ''
@@ -252,5 +255,6 @@ babel = Babel()
 text, width, height = babel.create_str('im1.png')
 address = babel.search(text, width, height)
 babel.create_im(address)
+babel.create_im(babel.search_by_location('111', '1', '1', '1', '1'))
 
 # babel.get_random_im()
