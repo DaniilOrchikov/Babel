@@ -12,7 +12,7 @@ def create_alf(prealf):
                 alf.append(r[1] + g[1] + b[1])
     r = []
     v = 0
-    while len(r) < len(alf):
+    while len(r) < len(alf) + 1:
         a = chr(v)
         try:
             with open('readable_alphabet.txt', 'w', encoding='utf-8') as f:
