@@ -10,14 +10,23 @@ def create_alf(prealf):
         for g in enumerate(prealf):
             for b in enumerate(prealf):
                 alf.append(r[1] + g[1] + b[1])
-    readable_alphabet = []
+    r = []
     v = 0
-    while len(readable_alphabet) < len(alf):
+    while len(r) < len(alf):
         a = chr(v)
-        if len(a) == 1 and a != '\n':
-            readable_alphabet.append(a)
+        try:
+            with open('readable_alphabet.txt', 'w', encoding='utf-8') as f:
+                print(a, file=f)
+        except UnicodeEncodeError:
+            v += 1
+            continue
+        if len(a) == 1 and a != '\n' and a != "'":
+            r.append(a)
         v += 1
-    return alf, alf, readable_alphabet
+    random.shuffle(r)
+    with open('readable_alphabet.txt', 'w', encoding='utf-8') as f:
+        print(r, file=f)
+    return alf, alf
 
 
 def parse_int(num, alf):
@@ -48,11 +57,15 @@ class Babel:
         self.seed = 13
         self.prealf = '0123456789abcdefghijklmnopqrstuv'  # неьзя использовать '-'
         self.number_of_colors = len(self.prealf)
+        # create_alf(self.prealf)
 
-        self.alphabet, self.digs, self.readable_alphabet = create_alf(self.prealf)
+        with open('alphabet.txt', 'r') as f:
+            self.alphabet = self.digs = f.read().split()
+        with open('readable_alphabet.txt', 'r', encoding='utf-8') as f:
+            self.readable_alphabet = f.read().split("'")
         self.alphabet.insert(0, self.alphabet.pop())
         self.lalf = len(self.alphabet)
-        self.lengthOfTitle = 113
+        self.lengthOfTitle = 31
 
         self.width, self.height = 360, 310
         self.lengthOfPage = self.width * self.height
@@ -68,7 +81,8 @@ class Babel:
         self.create_indexes()
 
     def search_by_location(self, hex, wall, shelf, volume, page):
-        return self.alphabet[0] * (111600 - len(hex)) + str(hex) + '-' + str(wall) + '-' + str(shelf) + '-' + str(int(volume)) + '-' + str(int(page))
+        return self.alphabet[0] * (111600 - len(hex)) + str(hex) + '-' + str(wall) + '-' + str(shelf) + '-' + str(
+            int(volume)) + '-' + str(int(page))
 
     def from_readable_title(self, title):
         new_title = ''
@@ -138,7 +152,7 @@ class Babel:
             self.readable_alphabetIndexes[char] = pos
 
     def get_random_im(self):
-        title = [self.readable_alphabet[random.randint(0, len(self.digs))] for _ in range(self.lengthOfTitle)]
+        title = [self.readable_alphabet[random.randrange(0, len(self.digs))] for _ in range(self.lengthOfTitle)]
         address = self.search_title(title) + '-' + str(random.randint(1, self.page))
         self.create_im(address)
 
@@ -200,8 +214,8 @@ class Babel:
         locHash = get_hash(str(wall) + str(shelf) + str(volume))
         hex = ''
         searchStr = searchStr[:self.lengthOfTitle * 3]
-        searchStr = searchStr if len(searchStr) == self.lengthOfTitle * 3 else str(searchStr) + '00u' * (
-                self.lengthOfTitle - len(searchStr) // 3)
+        # searchStr = searchStr if len(searchStr) == self.lengthOfTitle * 3 else str(searchStr) + '00u' * (
+        #         self.lengthOfTitle - len(searchStr) // 3)
         self.seed = locHash
         searchStr = [searchStr[j: j + 3] for j in range(0, len(searchStr), 3)]
         for i in range(len(searchStr)):
@@ -255,6 +269,7 @@ babel = Babel()
 text, width, height = babel.create_str('im1.png')
 address = babel.search(text, width, height)
 babel.create_im(address)
-babel.create_im(babel.search_by_location('111', '1', '1', '1', '1'))
+
+# babel.create_im(babel.search_title('print(int(input()))') + '-1')
 
 # babel.get_random_im()
