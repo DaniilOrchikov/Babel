@@ -20,7 +20,7 @@ def create_alf(prealf):
         except UnicodeEncodeError:
             v += 1
             continue
-        if len(a) == 1 and a != '\n' and a != "'":
+        if len(a) == 1 and a != '\n' and a != "'" and a != '\\' and a != ' ':
             r.append(a)
         v += 1
     random.shuffle(r)
@@ -79,6 +79,8 @@ class Babel:
         self.alfIndexes = {}
         self.readable_alphabetIndexes = {}
         self.create_indexes()
+        print(len(self.readable_alphabetIndexes), len(self.alfIndexes))
+        # print(self.readable_alphabet)
 
     def search_by_location(self, hex, wall, shelf, volume, page):
         return self.alphabet[0] * (111600 - len(hex)) + str(hex) + '-' + str(wall) + '-' + str(shelf) + '-' + str(
@@ -120,7 +122,7 @@ class Babel:
                 st += self.prealf[r] + self.prealf[g] + self.prealf[b]
         return st, width, height
 
-    def create_im(self, address):
+    def create_im(self, address, name):
         img = Image.new('RGB', (self.width, self.height), 'white')
         pix = img.load()
         m = []
@@ -136,7 +138,7 @@ class Babel:
                 pix[j, i] = self.prealf.index(m[i][j][0]) * (256 // self.number_of_colors), \
                             self.prealf.index(m[i][j][1]) * (256 // self.number_of_colors), \
                             self.prealf.index(m[i][j][2]) * (256 // self.number_of_colors)
-        img.save('im.png')
+        img.save('static/img/' + name)
 
     def rnd(self, mn=1, mx=0):
         m, a, c = 2 ** 32, 22695477, 1
@@ -151,10 +153,10 @@ class Babel:
         for pos, char in enumerate(self.readable_alphabet):
             self.readable_alphabetIndexes[char] = pos
 
-    def get_random_im(self):
+    def get_random_im(self, name):
         title = [self.readable_alphabet[random.randrange(0, len(self.digs))] for _ in range(self.lengthOfTitle)]
         address = self.search_title(title) + '-' + str(random.randint(1, self.page))
-        self.create_im(address)
+        self.create_im(address, name)
 
     def search(self, searchStr, width, height):
         wall = str(int(random.random() * self.wall + 1))
@@ -268,8 +270,7 @@ babel = Babel()
 
 text, width, height = babel.create_str('im1.png')
 address = babel.search(text, width, height)
-babel.create_im(address)
-
+babel.create_im(address, 'im.jpg')
 # babel.create_im(babel.search_title('print(int(input()))') + '-1')
 
-# babel.get_random_im()
+# babel.get_random_im('random.jpg')
