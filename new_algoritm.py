@@ -15,7 +15,7 @@ def create_alf(prealf):
     while len(r) < len(alf) + 1:
         a = chr(v)
         try:
-            with open('data/readable_alphabet.txt', 'w', encoding='utf-8') as f:
+            with open('static/txt/readable_alphabet.txt', 'w', encoding='utf-8') as f:
                 print(a, file=f)
         except UnicodeEncodeError:
             v += 1
@@ -24,7 +24,7 @@ def create_alf(prealf):
             r.append(a)
         v += 1
     random.shuffle(r)
-    with open('data/readable_alphabet.txt', 'w', encoding='utf-8') as f:
+    with open('static/txt/readable_alphabet.txt', 'w', encoding='utf-8') as f:
         print(r, file=f)
     return alf, alf
 
@@ -59,9 +59,9 @@ class Babel:
         self.number_of_colors = len(self.prealf)
         # create_alf(self.prealf)
 
-        with open('data/alphabet.txt', 'r') as f:
+        with open('static/txt/alphabet.txt', 'r') as f:
             self.alphabet = self.digs = f.read().split()
-        with open('data/readable_alphabet.txt', 'r', encoding='utf-8') as f:
+        with open('static/txt/readable_alphabet.txt', 'r', encoding='utf-8') as f:
             self.readable_alphabet = f.read().split("'")
         self.alphabet.insert(0, self.alphabet.pop())
         self.lalf = len(self.alphabet)
@@ -269,7 +269,3 @@ babel = Babel()
 text, width, height = babel.create_str('im1.png')
 address = babel.search(text, width, height)
 babel.create_im(address)
-
-# babel.create_im(babel.search_title('print(int(input()))') + '-1')
-
-# babel.get_random_im()
