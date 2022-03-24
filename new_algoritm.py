@@ -12,7 +12,7 @@ def create_alf(prealf):
                 alf.append(r[1] + g[1] + b[1])
     r = []
     v = 0
-    while len(r) < len(alf) + 1:
+    while len(r) < len(alf):
         a = chr(v)
         try:
             with open('readable_alphabet.txt', 'w', encoding='utf-8') as f:
@@ -57,7 +57,7 @@ class Babel:
         self.seed = 13
         self.prealf = '0123456789abcdefghijklmnopqrstuv'  # неьзя использовать '-'
         self.number_of_colors = len(self.prealf)
-        # create_alf(self.prealf)
+        # create_alf(self.prealf) # не забывать вставлять пробельный символ
 
         with open('alphabet.txt', 'r') as f:
             self.alphabet = self.digs = f.read().split()
@@ -80,13 +80,13 @@ class Babel:
         self.readable_alphabetIndexes = {}
         self.create_indexes()
         print(len(self.readable_alphabetIndexes), len(self.alfIndexes))
-        # print(self.readable_alphabet)
 
     def search_by_location(self, hex, wall, shelf, volume, page):
         return self.alphabet[0] * (111600 - len(hex)) + str(hex) + '-' + str(wall) + '-' + str(shelf) + '-' + str(
             int(volume)) + '-' + str(int(page))
 
     def from_readable_title(self, title):
+        title += ' ' * (self.lengthOfTitle - len(title))
         new_title = ''
         for i in title:
             new_title += self.alphabet[self.readable_alphabetIndexes[i]]
@@ -268,9 +268,12 @@ class Babel:
 
 babel = Babel()
 
-text, width, height = babel.create_str('im1.png')
-address = babel.search(text, width, height)
-babel.create_im(address, 'im.jpg')
-# babel.create_im(babel.search_title('print(int(input()))') + '-1')
+# text, width, height = babel.create_str('im1.png')
+# address = babel.search(text, width, height)
+# babel.create_im(address, 'im.jpg')
+title = ''
+address = babel.search_title(title) + '-1'
+babel.create_im(address, 'title.jpg')
+print(babel.get_title(address))
 
 # babel.get_random_im('random.jpg')
