@@ -20,7 +20,7 @@ def create_alf(prealf):
         except UnicodeEncodeError:
             v += 1
             continue
-        if len(a) == 1 and a != '\n' and a != "'" and a != '\\' and a != ' ':
+        if len(a) == 1 and a != '\n' and a != "'" and a != '\\' and a != ' ' and a != '/' and a.isprintable():
             r.append(a)
         v += 1
     random.shuffle(r)
@@ -270,11 +270,12 @@ class Babel:
 babel = Babel()
 
 # text, width, height = babel.create_str('im1.png')
+# print(text,width,height,sep='\n')
 # address = babel.search(text, width, height)
 # babel.create_im(address, 'im.jpg')
-title = ''
-address = babel.search_title(title) + '-1'
-babel.create_im(address, 'title.jpg')
-print(babel.get_title(address))
+# title = ''
+# address = babel.search_title(title) + '-1'
+# babel.create_im(address, 'title.jpg')
+# print(babel.get_title(address))
 
 # babel.get_random_im('random.jpg')

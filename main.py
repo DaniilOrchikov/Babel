@@ -2,10 +2,15 @@ from flask import Flask
 from flask_restful import Api
 from requests import get
 
-from api.api import GetTitle
+from api.api import GetTitle, SearchTitle, Search, GetIm, GetRandomIm
 
 app = Flask(__name__)
 api = Api(app)
+api.add_resource(GetTitle, '/api/get_title/<string:address>')
+api.add_resource(SearchTitle, '/api/search_title/<string:address>')
+api.add_resource(Search, '/api/search/<string:search_str>/<int:width>/<int:height>')
+api.add_resource(GetIm, '/api/create_im/<string:address>/<string:name>')
+api.add_resource(GetRandomIm, '/api/get_random_im/<string:name>')
 
 
 def main():
@@ -17,8 +22,8 @@ def index():
     return 'Начальная страница'
 
 
-@app.route('/search')
-def search():
+@app.route('/search_im')
+def search_im():
     return 'Страница с поиском по картинке'
 
 
