@@ -6,7 +6,6 @@ from api.api import GetTitle
 
 app = Flask(__name__)
 api = Api(app)
-api.add_resource(GetTitle, '/api/get_title/<string:address>')
 
 
 def main():
