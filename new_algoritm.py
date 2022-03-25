@@ -268,9 +268,9 @@ class Babel:
 
 babel = Babel()
 
-text, width, height = babel.create_str('im1.png')
-address = babel.search(text, width, height)
-babel.create_im(address, 'im.jpg')
+# text, width, height = babel.create_str('im1.png')
+# address = babel.search(text, width, height)
+# babel.create_im(address, 'im.jpg')
 # babel.create_im(babel.search_title('print(int(input()))') + '-1')
 
 # babel.get_random_im('random.jpg')
