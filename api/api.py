@@ -2,7 +2,7 @@ from flask import jsonify
 from flask_restful import Resource
 from requests import get
 
-from new_algoritm import babel
+from library_of_Babel import babel
 
 
 class GetTitle(Resource):

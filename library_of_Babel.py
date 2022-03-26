@@ -4,15 +4,15 @@ from PIL import Image
 import numpy as np
 
 
-def create_alf(prealf):
-    alf = []
-    for r in enumerate(prealf):
-        for g in enumerate(prealf):
-            for b in enumerate(prealf):
-                alf.append(r[1] + g[1] + b[1])
+def create_alf(used_symbols):
+    alphabet = []
+    for r in enumerate(used_symbols):
+        for g in enumerate(used_symbols):
+            for b in enumerate(used_symbols):
+                alphabet.append(r[1] + g[1] + b[1])
     r = []
     v = 0
-    while len(r) < len(alf):
+    while len(r) < len(alphabet):
         a = chr(v)
         try:
             with open('readable_alphabet.txt', 'w', encoding='utf-8') as f:
@@ -26,17 +26,6 @@ def create_alf(prealf):
     random.shuffle(r)
     with open('readable_alphabet.txt', 'w', encoding='utf-8') as f:
         print(r, file=f)
-    return alf, alf
-
-
-def parse_int(num, alf):
-    b = []
-    while num:
-        b.append(alf[num % len(alf)])
-        num //= len(alf)
-    b.reverse()
-    b = '|'.join(b)
-    return b
 
 
 def mod(a, b):
@@ -55,8 +44,8 @@ def pad(s, size):
 class Babel:
     def __init__(self):
         self.seed = 13
-        self.prealf = '0123456789abcdefghijklmnopqrstuv'  # неьзя использовать '-'
-        self.number_of_colors = len(self.prealf)
+        self.used_symbols = '0123456789abcdefghijklmnopqrstuv'  # нельзя использовать '-'
+        self.number_of_colors = len(self.used_symbols)
         # create_alf(self.prealf) # не забывать вставлять пробельный символ
 
         with open('alphabet.txt', 'r') as f:
@@ -64,7 +53,7 @@ class Babel:
         with open('readable_alphabet.txt', 'r', encoding='utf-8') as f:
             self.readable_alphabet = f.read().split("'")
         self.alphabet.insert(0, self.alphabet.pop())
-        self.lalf = len(self.alphabet)
+        self.alphabet_len = len(self.alphabet)
         self.lengthOfTitle = 31
 
         self.width, self.height = 360, 310
@@ -76,10 +65,10 @@ class Babel:
         self.page = 410
 
         self.digsIndexes = {}
-        self.alfIndexes = {}
+        self.alphabetIndexes = {}
         self.readable_alphabetIndexes = {}
         self.create_indexes()
-        print(len(self.readable_alphabetIndexes), len(self.alfIndexes))
+        print(len(self.readable_alphabetIndexes), len(self.alphabetIndexes))
         # print(self.readable_alphabet)
 
     def search_by_location(self, hex, wall, shelf, volume, page):
@@ -96,7 +85,7 @@ class Babel:
     def in_readable_title(self, title):
         new_title = ''
         for i in range(0, len(title), 3):
-            new_title += self.readable_alphabet[self.alfIndexes[title[i: i + 3]]]
+            new_title += self.readable_alphabet[self.alphabetIndexes[title[i: i + 3]]]
         return new_title
 
     def create_str(self, path):
@@ -120,7 +109,7 @@ class Babel:
                 r, g, b = r // (256 // self.number_of_colors), \
                           g // (256 // self.number_of_colors), \
                           b // (256 // self.number_of_colors)
-                st += self.prealf[r] + self.prealf[g] + self.prealf[b]
+                st += self.used_symbols[r] + self.used_symbols[g] + self.used_symbols[b]
         return st, width, height
 
     def create_im(self, address, name):
@@ -136,9 +125,9 @@ class Babel:
                 v += 1
         for i in range(self.height):
             for j in range(self.width):
-                pix[j, i] = self.prealf.index(m[i][j][0]) * (256 // self.number_of_colors), \
-                            self.prealf.index(m[i][j][1]) * (256 // self.number_of_colors), \
-                            self.prealf.index(m[i][j][2]) * (256 // self.number_of_colors)
+                pix[j, i] = self.used_symbols.index(m[i][j][0]) * (256 // self.number_of_colors), \
+                            self.used_symbols.index(m[i][j][1]) * (256 // self.number_of_colors), \
+                            self.used_symbols.index(m[i][j][2]) * (256 // self.number_of_colors)
         img.save('static/img/' + name)
 
     def rnd(self, mn=1, mx=0):
@@ -150,7 +139,7 @@ class Babel:
         for pos, char in enumerate(self.digs):
             self.digsIndexes[char] = pos
         for pos, char in enumerate(self.alphabet):
-            self.alfIndexes[char] = pos
+            self.alphabetIndexes[char] = pos
         for pos, char in enumerate(self.readable_alphabet):
             self.readable_alphabetIndexes[char] = pos
 
@@ -159,7 +148,7 @@ class Babel:
         address = self.search_title(title) + '-' + str(random.randint(1, self.page))
         self.create_im(address, name)
 
-    def search(self, searchStr, width, height):
+    def search(self, search_str, width, height):
         wall = str(int(random.random() * self.wall + 1))
         shelf = str(int(random.random() * self.shelf + 1))
         volume = pad(str(int(random.random() * self.volume + 1)), 2)
@@ -168,8 +157,8 @@ class Babel:
         hex = ''
         w = random.randint(0, self.width - width)
         h = random.randint(0, self.height - height)
-        searchStr = [searchStr[j: j + 3] for j in range(0, len(searchStr), 3) if len(searchStr[j: j + 3]) == 3]
-        searchArr = [list(i) for i in np.array(searchStr).reshape(height, width)]
+        search_str = [search_str[j: j + 3] for j in range(0, len(search_str), 3) if len(search_str[j: j + 3]) == 3]
+        searchArr = [list(i) for i in np.array(search_str).reshape(height, width)]
         if w:
             for i in range(height):
                 for j in range(w):
@@ -186,19 +175,19 @@ class Babel:
         for i in range(self.height):
             for j in range(self.width - width - w):
                 searchArr[i].append(self.alphabet[int(random.random() * len(self.alphabet))])
-        searchStr = np.array(searchArr).flatten()
+        search_str = np.array(searchArr).flatten()
         self.seed = locHash
-        for i in range(len(searchStr)):
-            index = self.alfIndexes[searchStr[i]] or -1
+        for i in range(len(search_str)):
+            index = self.alphabetIndexes[search_str[i]] or -1
             rand = self.rnd(0, len(self.alphabet))
             newIndex = mod(index + int(rand), len(self.digs))
             newChar = self.digs[newIndex]
             hex += str(newChar)
         return str(hex) + '-' + str(wall) + '-' + str(shelf) + '-' + str(int(volume)) + '-' + str(int(page))
 
-    def search_exactly(self, searchStr, width, height):
-        searchStr = [searchStr[j: j + 3] for j in range(0, len(searchStr), 3) if len(searchStr[j: j + 3]) == 3]
-        searchArr = [list(i) for i in np.array(searchStr).reshape(height, width)]
+    def search_exactly(self, search_str, width, height):
+        search_str = [search_str[j: j + 3] for j in range(0, len(search_str), 3) if len(search_str[j: j + 3]) == 3]
+        searchArr = [list(i) for i in np.array(search_str).reshape(height, width)]
         for i in range(self.height - height):
             searchArr.append([])
             for j in range(width):
@@ -206,23 +195,23 @@ class Babel:
         for i in range(self.height):
             for j in range(self.width - width):
                 searchArr[i].append(self.alphabet[-1])
-        searchStr = ''.join(np.array(searchArr).flatten())
-        return self.search(searchStr, self.width, self.height)
+        search_str = ''.join(np.array(searchArr).flatten())
+        return self.search(search_str, self.width, self.height)
 
-    def search_title(self, searchStr):
-        searchStr = self.from_readable_title(searchStr)
+    def search_title(self, search_str):
+        search_str = self.from_readable_title(search_str)
         wall = str(int(random.random() * self.wall + 1))
         shelf = str(int(random.random() * self.shelf + 1))
         volume = pad(str(int(random.random() * self.volume + 1)), 2)
         locHash = get_hash(str(wall) + str(shelf) + str(volume))
         hex = ''
-        searchStr = searchStr[:self.lengthOfTitle * 3]
+        search_str = search_str[:self.lengthOfTitle * 3]
         # searchStr = searchStr if len(searchStr) == self.lengthOfTitle * 3 else str(searchStr) + '00u' * (
         #         self.lengthOfTitle - len(searchStr) // 3)
         self.seed = locHash
-        searchStr = [searchStr[j: j + 3] for j in range(0, len(searchStr), 3)]
-        for i in range(len(searchStr)):
-            index = self.alfIndexes[searchStr[i]]
+        search_str = [search_str[j: j + 3] for j in range(0, len(search_str), 3)]
+        for i in range(len(search_str)):
+            index = self.alphabetIndexes[search_str[i]]
             rand = self.rnd(0, len(self.alphabet))
             newIndex = mod(index + int(rand), len(self.digs))
             newChar = self.digs[newIndex]
