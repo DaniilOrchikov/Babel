@@ -49,16 +49,6 @@ def book(address):
 На эту же страницу будет переход при нажатии на random'''
 
 
-@app.route('/sign_up')
-def sign_up():
-    return 'Страница для создания нового пользователя'
-
-
-@app.route('/sign_in')
-def sign_in():
-    return 'Страница для входа в учетную запись'
-
-
 @app.route('/personal_account')
 def personal_account():
     return 'Личный кабинет'
