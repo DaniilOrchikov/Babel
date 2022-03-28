@@ -1,4 +1,6 @@
+import base64
 import hashlib
+import io
 import random
 from PIL import Image
 import numpy as np
@@ -88,8 +90,8 @@ class Babel:
             new_title += self.readable_alphabet[self.alphabetIndexes[title[i: i + 3]]]
         return new_title
 
-    def create_str(self, path):
-        im = Image.open(path)
+    def create_str(self, image):
+        im = Image.open(io.BytesIO(image))
         width, height = im.size
         if width > self.width and height > self.height:
             im = im.resize((self.width, self.height), Image.NEAREST)
@@ -112,7 +114,7 @@ class Babel:
                 st += self.used_symbols[r] + self.used_symbols[g] + self.used_symbols[b]
         return st, width, height
 
-    def create_im(self, address, name):
+    def create_im(self, address):
         img = Image.new('RGB', (self.width, self.height), 'white')
         pix = img.load()
         m = []
@@ -128,7 +130,10 @@ class Babel:
                 pix[j, i] = self.used_symbols.index(m[i][j][0]) * (256 // self.number_of_colors), \
                             self.used_symbols.index(m[i][j][1]) * (256 // self.number_of_colors), \
                             self.used_symbols.index(m[i][j][2]) * (256 // self.number_of_colors)
-        img.save('static/img/' + name)
+        img_byte_arr = io.BytesIO()
+        img.save(img_byte_arr, format='JPEG')
+        img_byte_arr = img_byte_arr.getvalue()
+        return base64.b64encode(img_byte_arr)
 
     def rnd(self, mn=1, mx=0):
         m, a, c = 2 ** 32, 22695477, 1

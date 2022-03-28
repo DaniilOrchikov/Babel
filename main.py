@@ -28,7 +28,9 @@ def main():
 
 @app.route('/')
 def index():
-    pass
+    # data = get('http://127.0.0.1:5000/api/random_page').json()['image']
+    # return f'<img src={data}>'    отображение картинки
+    return '1234567890'
 
 
 @app.route('/search_im')

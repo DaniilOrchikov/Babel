@@ -1,3 +1,5 @@
+import base64
+
 from flask import jsonify
 from flask_restful import Resource
 
@@ -13,16 +15,15 @@ class BookList(Resource):
 class Page(Resource):
     def get(self, r_type, request_str):
         if r_type == 'im':
-            image = request_str
-            # магия
+            image = bytearray(request_str)
             search_str, width, height = babel.create_str(image)
             address = babel.search(search_str, width, height)
             title = babel.get_title(address)
-            image = babel.create_im(address, title + address.split('-')[-1])
-            # магия
+            image = babel.create_im(address)
+            image = image.decode()
             return jsonify(
                 {
-                    'image': image,
+                    'image': f'"data:image/jpeg;base64,{image}"',
                     'address': address,
                     'title': title
                 }
@@ -30,11 +31,11 @@ class Page(Resource):
         elif r_type == 'a':
             address = request_str
             title = babel.get_title(address)
-            image = babel.create_im(address, title)
-            # магия
+            image = babel.create_im(address)
+            image = image.decode()
             return jsonify(
                 {
-                    'image': image,
+                    'image': f'"data:image/jpeg;base64,{image}"',
                     'address': address,
                     'title': title
                 }
@@ -45,11 +46,11 @@ class RandomPage(Resource):
     def get(self):
         address = babel.get_random()
         title = babel.get_title(address)
-        image = babel.create_im(address, title)
-        # магия
+        image = babel.create_im(address)
+        image = image.decode()
         return jsonify(
             {
-                'image': image,
+                'image': f'"data:image/jpeg;base64,{image}"',
                 'address': address,
                 'title': title
             }
