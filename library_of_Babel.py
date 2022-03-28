@@ -143,10 +143,10 @@ class Babel:
         for pos, char in enumerate(self.readable_alphabet):
             self.readable_alphabetIndexes[char] = pos
 
-    def get_random_im(self, name):
+    def get_random(self):
         title = [self.readable_alphabet[random.randrange(0, len(self.digs))] for _ in range(self.lengthOfTitle)]
         address = self.search_title(title) + '-' + str(random.randint(1, self.page))
-        self.create_im(address, name)
+        return address
 
     def search(self, search_str, width, height):
         wall = str(int(random.random() * self.wall + 1))
@@ -257,6 +257,8 @@ class Babel:
 
 
 babel = Babel()
+# for i in range(babel.volume):
+#     print(babel.get_title('000-1-1-' + str(i)))
 
 # text, width, height = babel.create_str('im1.png')
 # print(text,width,height,sep='\n')

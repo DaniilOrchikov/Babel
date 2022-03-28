@@ -2,10 +2,10 @@ from flask import Flask, render_template
 from flask_restful import Api
 from werkzeug.utils import redirect
 
+from api.api import BookList, Page, RandomPage
 from data import db_session
 from requests import get
 
-from api.api import GetTitle, SearchTitle, Search, GetIm, GetRandomIm
 from data.users import User
 from forms.user import RegisterForm, LoginForm
 from flask_login import LoginManager, login_user, login_required, logout_user
@@ -16,11 +16,9 @@ login_manager.init_app(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 api = Api(app)
-api.add_resource(GetTitle, '/api/get_title/<string:address>')
-api.add_resource(SearchTitle, '/api/search_title/<string:title>')
-api.add_resource(Search, '/api/search/<string:search_str>/<int:width>/<int:height>')
-api.add_resource(GetIm, '/api/create_im/<string:address>/<string:name>')
-api.add_resource(GetRandomIm, '/api/get_random_im/<string:name>')
+api.add_resource(BookList, '/api/book_list/<string:address>')
+api.add_resource(Page, '/api/page/<string:r_type>/<string:request_str>')
+api.add_resource(RandomPage, '/api/random_page')
 
 
 def main():
@@ -30,7 +28,7 @@ def main():
 
 @app.route('/')
 def index():
-    return 'Начальная страница'
+    pass
 
 
 @app.route('/search_im')
