@@ -34,6 +34,7 @@ def main():
 @app.route('/')
 def index():
     """Главная страница"""
+    return render_template('index.html')
 
 
 @app.route('/search_im', methods=['GET', 'POST'])
@@ -51,6 +52,7 @@ def search_im():
 @app.route('/browse')
 def browse():
     """Страница с самой библиотекой(можно выбрать комнату шкаф и тд)"""
+    return render_template('browse.html')
 
 
 @app.route('/book/<string:address>')
@@ -75,6 +77,7 @@ def personal_account():
 @app.route('/info')
 def info():
     """Страница с информацией о сайте"""
+    return render_template('info.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
