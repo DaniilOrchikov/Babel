@@ -6,3 +6,12 @@ body {
  left:0;
  z-index:-1;
 }
+.nav-link{
+color: #ffffff
+}
+h1{
+ color: #ffffff;
+ margin-top: 20%;
+ text-align:  center;
+ font-family: "Times New Roman", sans-serif;
+}
