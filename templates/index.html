@@ -1,37 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Вавилонская библиотека">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="static/css/style.css"/>
-    <title>{{ title }}</title>
-</head>
-
-<body>
-<header>
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Library</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="">Sing in</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="">Sing up</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="">Information</a>
-        </li>
-    </ul>
-</header>
-<main class="main">
-    <h1>Babylonian library</h1>
-</main>
-<footer>
-</footer>
-</body>
-
-</html>
+{% extends "base.html" %}
+{% block content %}
+<h1>Babylonian library</h1>
+{% endblock %}

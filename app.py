@@ -42,19 +42,19 @@ def search():
     return render_template('search.html', title='Поиск картинок')
 
 
-@app.route('/sing_up', methods=['GET', 'POST'])
+@app.route('/sign_up', methods=['GET', 'POST'])
 def sing_up():
     """страница с регистрацией"""
-    return render_template('sing_up.html', title='Поиск картинок')
+    return render_template('sign_up.html', title='Поиск картинок')
 
 
-@app.route('/sing_in', methods=['GET', 'POST'])
+@app.route('/sign_in', methods=['GET', 'POST'])
 def sing_in():
     """страница с авторизацией"""
     form = SingInForm()
     if form.validate_on_submit():
         return redirect('/account')
-    return render_template('sing_in.html', title='Авторизация', form=form)
+    return render_template('sign_in.html', title='Авторизация', form=form)
 
 
 @app.route('/image/<string:address>')
