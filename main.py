@@ -1,5 +1,4 @@
 import base64
-
 from flask import Flask, render_template, request
 from flask_restful import Api
 from werkzeug.utils import redirect
@@ -10,7 +9,7 @@ from requests import get
 
 from data.users import User
 from forms.user import RegisterForm, LoginForm
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -63,6 +62,14 @@ def book(address):
 @app.route('/personal_account')
 def personal_account():
     """Личный кабинет"""
+    im_list = current_user.im_list.split('┫ ┫')
+    data_list = []
+    for i in im_list:
+        data_list.append(get('http://127.0.0.1:5000/api/page/a/' + i).json())
+    return render_template('personal_account.html', name=current_user.name,
+                           email=current_user.email) + ' '.join(
+        [render_template('personal_account_saved_image.html', image=i['image'],
+                         name=i['title']) for i in data_list])
 
 
 @app.route('/info')
