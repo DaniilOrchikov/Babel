@@ -22,7 +22,7 @@ def create_alf(used_symbols):
         except UnicodeEncodeError:
             v += 1
             continue
-        if len(a) == 1 and a != '\n' and a != "'" and a != '\\' and a != ' ' and a != '/' and a.isprintable():
+        if len(a) == 1 and a != '\n' and a != "'" and a != '\\' and a != ' ' and a not in '/┫' and a.isprintable():
             r.append(a)
         v += 1
     random.shuffle(r)
@@ -48,7 +48,7 @@ class Babel:
         self.seed = 13
         self.used_symbols = '0123456789abcdefghijklmnopqrstuv'  # нельзя использовать '-'
         self.number_of_colors = len(self.used_symbols)
-        # create_alf(self.prealf) # не забывать вставлять пробельный символ
+        # create_alf(self.used_symbols) # не забывать вставлять пробельный символ
 
         with open('alphabet.txt', 'r') as f:
             self.alphabet = self.digs = f.read().split()

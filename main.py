@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+import base64
+
+from flask import Flask, render_template, request
 from flask_restful import Api
 from werkzeug.utils import redirect
 
@@ -21,6 +23,10 @@ api.add_resource(Page, '/api/page/<string:r_type>/<string:request_str>')
 api.add_resource(RandomPage, '/api/random_page')
 
 
+# data = get('http://127.0.0.1:5000/api/random_page').json()['image']
+# return f'<img src={data}>'  # отображение картинки
+
+
 def main():
     db_session.global_init("db/blogs.db")
     app.run()
@@ -28,35 +34,40 @@ def main():
 
 @app.route('/')
 def index():
-    # data = get('http://127.0.0.1:5000/api/random_page').json()['image']
-    # return f'<img src={data}>'    отображение картинки
-    return '1234567890'
+    """Главная страница"""
 
 
-@app.route('/search_im')
+@app.route('/search_im', methods=['GET', 'POST'])
 def search_im():
-    return 'Страница с поиском по картинке'
+    """Страница с поиском по картинке"""
+    if request.method == 'GET':
+        return render_template('search_im.html')
+    else:
+        f = request.files['file'].read()
+        image = base64.b64encode(f).decode()
+        data = get('http://127.0.0.1:5000/api/page/im/' + image).json()
+        return redirect('/book/' + data['address'])
 
 
 @app.route('/browse')
 def browse():
-    return 'Страница с самой библиотекой(можно выбрать комнату шкаф и тд)'
+    """Страница с самой библиотекой(можно выбрать комнату шкаф и тд)"""
 
 
 @app.route('/book/<string:address>')
 def book(address):
-    return f'''Страница со страницей, которая расположена по адресу{address}
-На эту же страницу будет переход при нажатии на random'''
+    """Страница со страницей, которая расположена по адресу
+На эту же страницу будет переход при нажатии на random"""
 
 
 @app.route('/personal_account')
 def personal_account():
-    return 'Личный кабинет'
+    """Личный кабинет"""
 
 
 @app.route('/info')
 def info():
-    return 'Страница с информацией о сайте'
+    """Страница с информацией о сайте"""
 
 
 @app.route('/register', methods=['GET', 'POST'])
