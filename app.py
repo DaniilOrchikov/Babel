@@ -69,5 +69,9 @@ def personal_account():
     return render_template('account.html', title='Личный аккаунт')
 
 
+def register():
+    """инфоомация о пользователе(если зарегистрирован)"""
+
+
 if __name__ == '__main__':
     main()
