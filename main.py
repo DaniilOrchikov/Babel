@@ -55,8 +55,8 @@ def browse():
     return render_template('browse.html')
 
 
-@app.route('/book/<string:address>')
-def book(address):
+@app.route('/image/<string:address>')
+def image(address):
     """Страница со страницей, которая расположена по адресу
 На эту же страницу будет переход при нажатии на random"""
 
