@@ -27,11 +27,11 @@ def home_page():
 @app.route('/information')
 def info():
     """страница с информацией о сайте"""
-    return render_template('info.html', title='Главная страница страница')
+    return render_template('info.html', title='Информация')
 
 
-@app.route('/library')
-def library():
+@app.route('/browse')
+def browse():
     """основная страница с библиотекой -> переход в def image()"""
     return render_template('library.html', title='Библиотека')
 
@@ -59,7 +59,7 @@ def sing_in():
 
 @app.route('/image/<string:address>')
 def image():
-    """случайно сгенерированная картинка/выбранная книга"""
+    """странца с выбранной книгой"""
     return render_template('adress.html', title='Поиск картинок')
 
 
@@ -67,10 +67,6 @@ def image():
 def personal_account():
     """страница с личным кабинетом: все сохраненные фотографии"""
     return render_template('account.html', title='Личный аккаунт')
-
-
-def register():
-    """инфоомация о пользователе(если зарегистрирован)"""
 
 
 if __name__ == '__main__':
