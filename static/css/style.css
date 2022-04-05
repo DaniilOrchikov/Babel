@@ -10,9 +10,11 @@
     height: 100vh;
     padding-top: 20px;
 }
-.radius-style{
-border-radius: 20px;
+
+.radius-style {
+    border-radius: 20px;
 }
+
 .nav {
     /* Цвет и расположение панели навигации*/
     background: #ffffff;
@@ -79,20 +81,23 @@ border-radius: 20px;
     height: 150px;
     width: 200px;
 }
+
 .site-footer {
-  min-width: 550px;
-  background-color: #000;
-  color: #fff;
+    min-width: 550px;
+    background-color: #000;
+    color: #fff;
 }
 
 .site-footer .container {
-  text-align: center;
+    text-align: center;
 }
+
 .site-footer p {
-  display: inline-block;
-  vertical-align: middle;
-  padding: 5px 10px;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px 10px;
 }
+
 @font-face {
     /* Гарнитура шрифта */
     font-family: 'Lato';
