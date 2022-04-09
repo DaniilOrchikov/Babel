@@ -1,4 +1,6 @@
 from flask import Flask
+import sys
+from PyQt5.QtWidgets import QApplication
 from flask import request
 from flask import jsonify
 from flask import redirect
@@ -33,7 +35,7 @@ def info():
 @app.route('/browse')
 def browse():
     """основная страница с библиотекой -> переход в def image()"""
-    return render_template('library.html', title='Библиотека')
+    return render_template('browse.html', title='Библиотека')
 
 
 @app.route('/search')

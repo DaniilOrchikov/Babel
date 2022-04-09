@@ -12,17 +12,23 @@
 
 <body>
     <header>
-        <div class="header">
-            <ul class="nav justify-content-end">
-                <p class="nav-img-pos"><a href="https://t.me/+r0lCltIvRNtlNjJi"><img class="nav-img radius-style"
-                            src="static/img/telegram.png" alt="Телеграм"></a></p>
-                <li class="nav-item">
-                    <a class="nav-link nav-first" href="/sign_in">Sign in</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-second" href="/sign_up">Sign up</a>
-                </li>
-            </ul>
+        <div class="header-top">
+            <div class="left-header">
+                <p class="right-title font-style">Library of Babel</p>
+            </div>
+            <div class="right-header">
+                <ul class="nav justify-content-end">
+                    <p class="nav-img-pos"><a href="https://t.me/+r0lCltIvRNtlNjJi"><img class="nav-img radius-style"
+                                src="static/img/telegram.png" alt="Телеграм"></a></p>
+                    <li class="nav-item">
+                        <a class="nav-link nav-first" href="/sign_in">Sign in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-second" href="/sign_up">Sign up</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </header>
     {% block content %}{% endblock %}
