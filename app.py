@@ -1,6 +1,4 @@
 from flask import Flask
-import sys
-from PyQt5.QtWidgets import QApplication
 from flask import request
 from flask import jsonify
 from flask import redirect

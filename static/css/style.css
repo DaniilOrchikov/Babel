@@ -6,6 +6,11 @@
     height: 100%;
 }
 
+.sign-in-style {
+    height: 100vh;
+    background-color: #fff;
+}
+
 .background-style {
     /*расположение изображений фона*/
     top: 0;
@@ -109,12 +114,42 @@
 }
 
 .main-text {
+    display: flex;
     /*параметры текста*/
-    color: #fff;
-    font-size: 36pt;
     margin-top: 40px;
-    text-align: center;
+    justify-content: center;
     padding-bottom: 40px;
+}
+
+.title {
+    width: 22ch;
+    color: #fff;
+    font-family: monospace;
+    white-space: nowrap;
+    font-size: 44px;
+    overflow: hidden;
+    border-right: 3px solid black;
+    animation: flashing-border 1s step-end infinite, printed-text 5s steps(22);
+}
+
+@keyframes flashing-border {
+    0% {
+        border-color: black;
+    }
+
+    50% {
+        border-color: transparent;
+    }
+
+    100% {
+        border-color: black;
+    }
+}
+
+@keyframes printed-text {
+    from {
+        width: 0;
+    }
 }
 
 .text-style {
@@ -228,6 +263,12 @@ blockquote cite {
     justify-content: space-between;
 }
 
+.video:hover {
+    -webkit-transform: scale(1.02);
+    -ms-transform: scale(1.02);
+    transform: scale(1.02);
+}
+
 .article-located {
     margin-right: 20px;
     margin-left: 20px;
@@ -246,6 +287,16 @@ blockquote cite {
 .article-link:hover {
     color: #CE242B;
     text-decoration: underline;
+}
+
+.form-style {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 450px;
+    background-color: #000;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 @font-face {
