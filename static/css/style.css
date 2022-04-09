@@ -14,8 +14,9 @@
     padding-top: 20px;
     background: url('/static/img/bg.jpg');
 }
-.font-style{
-font-family: 'Lato', sans-serif;
+
+.font-style {
+    font-family: 'Lato', sans-serif;
 }
 
 .header-top {
@@ -142,8 +143,10 @@ font-family: 'Lato', sans-serif;
     height: 150px;
     width: 200px;
 }
-.content-gif{
-margin-top: 5%;}
+
+.content-gif {
+    margin-top: 5%;
+}
 
 .site-footer {
     min-width: 550px;
@@ -208,13 +211,14 @@ blockquote p {
 blockquote cite {
     font-style: normal;
 }
-.article-text{
-padding-top: 20px;
-padding-bottom: 20px;
-padding-right: 15px;
-padding-left: 15px;
-font-size: 12pt;
-background-color: #fff;
+
+.article-text {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size: 12pt;
+    background-color: #fff;
 }
 
 .video-container {
@@ -223,22 +227,27 @@ background-color: #fff;
     flex-direction: row;
     justify-content: space-between;
 }
-.article-located{
-margin-right: 20px;
-margin-left: 20px;
+
+.article-located {
+    margin-right: 20px;
+    margin-left: 20px;
 }
-.article-link{
-font-style: italic;
-color: #310062;
-text-decoration: none;
+
+.article-link {
+    font-style: italic;
+    color: #310062;
+    text-decoration: none;
 }
-.gif-rotate{
- transform: scale(-1, 1)
+
+.gif-rotate {
+    transform: scale(-1, 1)
 }
+
 .article-link:hover {
     color: #CE242B;
     text-decoration: underline;
-   }
+}
+
 @font-face {
     /* Гарнитура шрифта */
     font-family: 'Lato';
