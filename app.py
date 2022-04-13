@@ -2,9 +2,11 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask import redirect
+from data import db_session
+from data.users import User
 from flask_restful import Api
 from flask import render_template
-from forms.user import SingInForm
+from forms.user import RegisterForm
 
 app = Flask(__name__)
 
@@ -14,7 +16,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 # api = Api(__name__)
 
 def main():
-    # db_session.global_init("db/blogs.db")
+    db_session.global_init("db/data_base.db")
     app.run(port=8080, host='127.0.0.1')
 
 
@@ -43,18 +45,36 @@ def search():
 
 
 @app.route('/sign_up', methods=['GET', 'POST'])
-def sing_up():
-    """страница с регистрацией"""
-    return render_template('sign_up.html', title='Поиск картинок')
+def sign_up():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        if form.password.data != form.password_again.data:
+            return render_template('sign_up.html', title='Регистрация',
+                                   form=form,
+                                   message="Пароли не совпадают")
+        db_sess = db_session.create_session()
+        if db_sess.query(User).filter(User.email == form.email.data).first():
+            return render_template('sign_up.html', title='Регистрация',
+                                   form=form,
+                                   message="Такой пользователь уже есть")
+        user = User(
+            name=form.name.data,
+            email=form.email.data,
+            surname=form.surname.data
+        )
+        user.set_password(form.password.data)
+        db_sess.add(user)
+        db_sess.commit()
+        return redirect('/login')
+    return render_template('sign_up.html', title='Регистрация', form=form)
 
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sing_in():
     """страница с авторизацией"""
-    form = SingInForm()
-    if form.validate_on_submit():
-        return redirect('/account')
-    return render_template('sign_in.html', title='Авторизация', form=form)
+    # if form.validate_on_submit():
+    #     return redirect('/account')
+    # return render_template('sign_in.html', title='Авторизация', form=form)
 
 
 @app.route('/image/<string:address>')
