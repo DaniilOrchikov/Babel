@@ -45,7 +45,7 @@ def search():
 
 
 @app.route('/sign_up', methods=['GET', 'POST'])
-def sign_up():
+def sign_up():  # регистрация
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
