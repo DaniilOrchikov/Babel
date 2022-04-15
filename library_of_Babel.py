@@ -62,7 +62,7 @@ class Babel:
         self.lengthOfPage = self.width * self.height
 
         self.wall = 4
-        self.shelf = 5
+        self.shelf = 20
         self.volume = 32
         self.page = 410
 
