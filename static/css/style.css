@@ -9,6 +9,9 @@
 .sign-in-style {
     height: 100vh;
 }
+.adress-style {
+    height: 100vh;
+}
 
 .sign-up-style {
     background: url('/static/img/bg_library.jpg') no-repeat;
@@ -351,11 +354,29 @@ blockquote cite {
     justify-content: center;
 }
 
-.sign-style-h {
+.sign-style-p {
+    font-size: 20pt;
     display: flex;
     justify-content: center;
 }
 
+.adress-container {
+    display: flex;
+    flex-direction: column;
+}
+.image-adress {
+    display: flex;
+    justify-content: center;
+ }
+
+.image-adress-style {
+    image-rendering: optimizeSpeed;
+}
+.adress-button{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
 @font-face {
     /* Гарнитура шрифта */
     font-family: 'Lato';

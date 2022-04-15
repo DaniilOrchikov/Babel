@@ -105,16 +105,22 @@ def logout():
     return redirect("/")
 
 
-@app.route('/image/<string:address>')
+@app.route('/image')
 def image():
-    """странца с выбранной книгой"""
-    return render_template('adress.html', title='Поиск картинок')
+    """выбранная книга"""
+    return render_template('adress.html', title='Поиск картинок', page=1)
 
 
 @app.route('/account')
 def personal_account():
     """страница с личным кабинетом: все сохраненные фотографии"""
     return render_template('account.html', title='Личный аккаунт')
+
+
+@app.route('/random_book')
+def random_book():
+    """"""
+    return render_template('book.html', title='Личный аккаунт')
 
 
 if __name__ == '__main__':

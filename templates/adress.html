@@ -1,9 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-        <title>{{ title }}</title>
-    </head>
-    <body>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div class="adress-style">
+<h1>{{ page }}</h1> <!-- Номер страницы-->
+<div class="adress-container">
+<div class="image-adress"><img class="image-adress-style" src="static/img/telegram.png"></div><!-- Здесь картинка -->
+<div class="adress-button">
+<a class="btn btn-primary" href="#" role="button">next page</a> <!-- В href="#" вставлять ссылку с переходом -->
+<a class="btn btn-primary" href="#" role="button">previous page</a>
+</div>
+</div>
+</div>
+{% endblock %}
