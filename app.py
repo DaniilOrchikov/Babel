@@ -14,7 +14,7 @@ from flask_login import login_user
 from flask_login import logout_user
 from flask_login import login_required
 from forms.user import LoginForm
-from library_of_Babel import babel
+from library_of_babel import babel
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
