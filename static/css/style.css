@@ -1,0 +1,392 @@
+.index-style {
+    height: 100vh;
+}
+
+.info-style {
+    height: 100%;
+}
+
+.sign-in-style {
+    height: 100vh;
+}
+
+.book-style {
+    height: 100vh;
+}
+
+.sign-up-style {
+    background: url('/static/img/bg_library.jpg') no-repeat;
+    background-size: 100%;
+}
+
+.background-style {
+    /*расположение изображений фона*/
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 20px;
+    background: url('/static/img/bg.jpg');
+}
+
+.font-style {
+    font-family: 'Lato', sans-serif;
+}
+
+.header-top {
+    /* Цвет и расположение панели навигации*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #fff;
+    padding: 10px 5px;
+    margin-bottom: -14px;
+}
+
+.left-header {
+    margin-left: 10px;
+}
+
+.username {
+    font-weight: bold;
+    padding-top: 10px;
+    margin-right: 2px;
+    text-decoration: none;
+    color: #000;
+}
+
+.username:hover {
+    color: #d2b48c;
+}
+
+.right-title {
+    font-size: 22pt;
+    line-height: 50px;
+    font-weight: 500;
+    position: relative;
+    background: white;
+    overflow: hidden;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.right-title:before {
+    content: '';
+    position: absolute;
+    filter: blur(8px);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: screen;
+    background-image: repeating-linear-gradient(-90deg, transparent, transparent 1em, #fff 1em, #fff 50%), repeating-linear-gradient(90deg, #000, #000 1em, #000 1em, #000 50%);
+    background-size: 3em 3em, 2em 2em;
+    animation-name: ani;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes ani {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 100% 0;
+    }
+}
+
+@media (max-width:690px) {
+    .right-title {
+        font-size: 20px;
+    }
+}
+
+.right-header {
+    margin-top: 7px;
+}
+
+.radius-style {
+    border-radius: 20px;
+}
+
+.nav-link {
+    /*цвет ссылок навигици*/
+    color: #000;
+}
+
+.nav-img {
+    /*картинки в панели навигации*/
+    height: 39.9px;
+    width: 40px;
+}
+
+.nav-img-pos {
+    /*расположение картинки в панели навигации*/
+    margin-right: 10px;
+}
+
+.nav-link:hover {
+    background: #000;
+    /* Цвет ссылки при наведении на нее курсора мыши */
+    color: #fff;
+}
+
+.main-text {
+    display: flex;
+    /*параметры текста*/
+    margin-top: 38px;
+    justify-content: center;
+    padding-bottom: 30px;
+}
+
+.title {
+    width: 22ch;
+    color: #fff;
+    font-family: monospace;
+    white-space: nowrap;
+    font-size: 44px;
+    overflow: hidden;
+    border-right: 3px solid black;
+    animation: flashing-border 1s step-end infinite, printed-text 5s steps(22);
+}
+
+@keyframes flashing-border {
+    0% {
+        border-color: black;
+    }
+
+    50% {
+        border-color: transparent;
+    }
+
+    100% {
+        border-color: black;
+    }
+}
+
+@keyframes printed-text {
+    from {
+        width: 0;
+    }
+}
+
+.text-style {
+    /*стиль текста*/
+    color: #000;
+}
+
+.link-style {
+    font-size: 24pt;
+    text-decoration: none;
+}
+
+.link-style:hover {
+    color: #fff;
+}
+
+.link-located {
+    text-align: center;
+}
+
+.img-size {
+    /*Выравнивание по центру*/
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 150px;
+    width: 200px;
+}
+
+.content-gif {
+    margin-top: 5%;
+}
+
+.site-footer {
+    min-width: 550px;
+    background-color: #000;
+    color: #fff;
+}
+
+.site-footer .container {
+    text-align: center;
+}
+
+.site-footer p {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px 10px;
+}
+
+
+blockquote {
+    margin: 0;
+    background: white;
+    padding: 30px 30px 30px 90px;
+    position: relative;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+blockquote {
+    margin-bottom: 0;
+    background: white;
+    border-top: 0;
+    color: #3A3C55;
+    padding: 30px 30px 30px 90px;
+    position: relative;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+blockquote:before {
+    content: "\201C";
+    font-family: serif;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    color: white;
+    background: #000;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 30px;
+    line-height: 1.35;
+    text-align: center;
+}
+
+blockquote p {
+    margin: 0 0 16px;
+    font-size: 20px;
+    letter-spacing: .04em;
+    line-height: 1.4;
+}
+
+blockquote cite {
+    font-style: normal;
+}
+
+.article-text {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size: 12pt;
+    background-color: #fff;
+}
+
+.video-container {
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.video:hover {
+    -webkit-transform: scale(1.02);
+    -ms-transform: scale(1.02);
+    transform: scale(1.02);
+}
+
+.article-located {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.article-link {
+    font-style: italic;
+    color: #310062;
+    text-decoration: none;
+}
+
+.gif-rotate {
+    transform: scale(-1, 1)
+}
+
+.article-link:hover {
+    color: #CE242B;
+    text-decoration: underline;
+}
+
+.form-style {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 450px;
+    background-color: #fff;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.sign-up-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.gif-sign-up {
+    height: 180px;
+    width: 180px;
+}
+
+.gif-sign-up-center {
+    display: flex;
+    justify-content: center;
+}
+
+.sign-up-h {
+    margin-top: 5px;
+}
+
+.sign-in-h {
+    margin-top: 5px;
+}
+
+.gif-sign-in {
+    height: 180px;
+    width: 180px;
+}
+
+
+.gif-sign-in-center {
+    display: flex;
+    justify-content: center;
+}
+
+.sign-style-p {
+    font-size: 20pt;
+    display: flex;
+    justify-content: center;
+}
+
+.adress-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-book {
+    display: flex;
+    justify-content: center;
+}
+
+.image-book-style {
+    image-rendering: optimizeSpeed;
+}
+
+.form-browse {
+    width: 300px;
+}
+
+.message {
+    color: #fff;
+}
+
+@font-face {
+    /* Гарнитура шрифта */
+    font-family: 'Lato';
+    src: url('/static/fonts/Lato-ExtraLight.ttf') format('ttf');
+    font-style: normal;
+    font-weight: normal;
+}
