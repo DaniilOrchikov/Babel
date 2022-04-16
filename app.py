@@ -46,10 +46,34 @@ def info():
     return render_template('info.html', title='Информация')
 
 
-@app.route('/browse')
+@app.route('/browse', methods=['POST', 'GET'])
 def browse():
     """основная страница с библиотекой -> переход в def image()"""
-    return render_template('browse.html', title='Библиотека')
+    if request.method == 'GET':
+        return render_template('browse.html', title='Библиотека')
+    elif request.method == 'POST':
+        """получаем номера стеллажей, полок и тд, после отправки формы пользователем"""
+        room = request.form.get('room')
+        wall = request.form.get('wall')
+        shelf = request.form.get('shelf')
+        book = request.form.get('book')
+        page = request.form.get('page')
+        if room == "":
+            return render_template('browse.html', title='Библиотека',
+                                   message="Введите номер комнаты")
+        elif page == "":
+            return render_template('browse.html', title='Библиотека',
+                                   message="Введите номер страницы")
+        elif not (room.isdigit()):
+            return render_template('browse.html', title='Библиотека',
+                                   message_room="Некорректные данные номера полки(не натуральное число)")
+        elif not (0 < int(page) < 410) or not (room.isdigit()):
+            return render_template('browse.html', title='Библиотека',
+                                   message_page="Некорректные данные номера страницы")
+    # здесь алгоритм, который генерирует картинку
+    # получаем переменную с путем к файлу name
+    # пока заглушка стоит на картинку из директории
+    return render_template('book.html', title='Поиск картинок', picture_name="static/img/telegram.png")
 
 
 @app.route('/search')
@@ -108,7 +132,7 @@ def logout():
 @app.route('/image')
 def image():
     """выбранная книга"""
-    return render_template('adress.html', title='Поиск картинок', page=1)
+    return render_template('book.html', title='Выбранная картинка')
 
 
 @app.route('/account')

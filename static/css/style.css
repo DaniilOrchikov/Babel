@@ -9,7 +9,8 @@
 .sign-in-style {
     height: 100vh;
 }
-.adress-style {
+
+.book-style {
     height: 100vh;
 }
 
@@ -364,19 +365,24 @@ blockquote cite {
     display: flex;
     flex-direction: column;
 }
-.image-adress {
+
+.image-book {
     display: flex;
     justify-content: center;
- }
+}
 
-.image-adress-style {
+.image-book-style {
     image-rendering: optimizeSpeed;
 }
-.adress-button{
-    margin-top: 50px;
-    display: flex;
-    justify-content: center;
+
+.form-browse {
+    width: 300px;
 }
+
+.message {
+    color: #fff;
+}
+
 @font-face {
     /* Гарнитура шрифта */
     font-family: 'Lato';
