@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
-from flask import jsonify
 from flask import redirect
+from requests import get
 from data import db_session
 from data.users import User
 from flask_restful import Api
@@ -12,12 +12,17 @@ from flask_login import login_user
 from flask_login import logout_user
 from flask_login import login_required
 from forms.user import LoginForm
+from library_of_babel import babel
+from api.api import BookList, RandomPage, Page
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
+api = Api(app)
+api.add_resource(BookList, '/api/book_list/<string:address>')
+api.add_resource(Page, '/api/page/<string:r_type>/<string:request_str>')
+api.add_resource(RandomPage, '/api/random_page')
 
-# api = Api(__name__)
 
 def main():
     db_session.global_init("db/data_base.db")
@@ -64,16 +69,36 @@ def browse():
         elif page == "":
             return render_template('browse.html', title='Библиотека',
                                    message="Введите номер страницы")
-        elif not (room.isdigit()):
+        elif len(room) % 3 != 0:
             return render_template('browse.html', title='Библиотека',
-                                   message_room="Некорректные данные номера полки(не натуральное число)")
-        elif not (0 < int(page) < 410) or not (room.isdigit()):
+                                   message_room="Некорректные данные номера комнаты(количество символов должно быть кратно 3)")
+        elif not all(map(lambda x: x in babel.used_symbols, room)):
+            return render_template('browse.html', title='Библиотека',
+                                   message_room=f"Некорректные данные номера комнаты(можно использовать только символы: {babel.used_symbols})")
+        elif not (0 < int(page) < 411) or not (page.isdigit()):
             return render_template('browse.html', title='Библиотека',
                                    message_page="Некорректные данные номера страницы")
-    # здесь алгоритм, который генерирует картинку
-    # получаем переменную с путем к файлу name
-    # пока заглушка стоит на картинку из директории
-    return render_template('book.html', title='Поиск картинок', picture_name="static/img/telegram.png")
+        return redirect(f'/image{room}-{wall}-{shelf}-{book}-{page}')
+
+
+@app.route('/image<string:address>')
+def image(address):
+    """выбранная/случайная книга"""
+    page = address.split("-")[-1]
+    data = get(f'http://127.0.0.1:8080/api/page/a/{address}').json()['image']
+    return render_template('book.html', title='Книга', picture_name=data, number_page=page)
+
+
+@app.route('/account')
+def personal_account():
+    """страница с личным кабинетом: все сохраненные фотографии"""
+    return render_template('account.html', title='Личный аккаунт')
+
+
+@app.route('/random_book')
+def random_book():
+    address = get(f'http://127.0.0.1:8080/api/random_page').json()['address']
+    return redirect(f'/image{address}')
 
 
 @app.route('/search')
@@ -127,24 +152,6 @@ def sign_in():
 def logout():
     logout_user()
     return redirect("/")
-
-
-@app.route('/image')
-def image():
-    """выбранная книга"""
-    return render_template('book.html', title='Выбранная картинка')
-
-
-@app.route('/account')
-def personal_account():
-    """страница с личным кабинетом: все сохраненные фотографии"""
-    return render_template('account.html', title='Личный аккаунт')
-
-
-@app.route('/random_book')
-def random_book():
-    """"""
-    return render_template('book.html', title='Личный аккаунт')
 
 
 if __name__ == '__main__':

@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="background-style book-style">
-    <div class="image-book"><img class="image-book-style" src="{{picture_name}}"></div>
+<div class="book-style">
+    <div class="book-container">
+        <div class="book-container-left"><a href="{{picture_name}}" download="">скачать изображение</a></div>
+        <div class="book-container-right">
+            <div class="book-number-style">
+                <p class="font-style book-number-p"><span> Page {{number_page}} of 410</span></p>
+            </div>
+            <div>
+                <p class="book-p font-style"><strong>Picture name</strong></p>
+            </div>
+            <div><img class="image-book-style image-book-frame" src="{{picture_name}}"></div>
+        </div>
+    </div>
 </div>
 {% endblock %}

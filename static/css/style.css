@@ -12,6 +12,7 @@
 
 .book-style {
     height: 100vh;
+    background: url('/static/img/bg-book.jpg');
 }
 
 .sign-up-style {
@@ -349,7 +350,6 @@ blockquote cite {
     width: 180px;
 }
 
-
 .gif-sign-in-center {
     display: flex;
     justify-content: center;
@@ -361,26 +361,80 @@ blockquote cite {
     justify-content: center;
 }
 
-.adress-container {
+.book-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-left: 100px;
 }
 
-.image-book {
+.book-container-right {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    margin-left: 16%;
+
+}
+
+.book-container-left {
+    padding-top: 20%;
 }
 
 .image-book-style {
     image-rendering: optimizeSpeed;
 }
 
+.image-book-frame {
+    padding: 30px;
+    background: #f0f0f0;
+    border: 2px solid #666;
+}
+
+.book-p {
+    font-size: 26px;
+}
+
+.book-number-p {
+    color: #000;
+}
+
+.book-number-p span {
+    display: inline;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: -10px 0 0 rgba(0, 0, 0, 0.4), 11px 0 0 rgba(0, 0, 0, 0.4);
+    padding: 0 10px 0 0;
+    color: #FFF;
+    line-height: 15px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.book-number-style {
+    padding-top: 15px;
+    padding-bottom: 40px;
+}
+
 .form-browse {
     width: 300px;
 }
 
+.browse-form-style {
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .message {
     color: #fff;
+    padding-bottom: 10px;
+}
+
+.book-gif-size {
+    height: 70px;
+    width: 150px;
 }
 
 @font-face {

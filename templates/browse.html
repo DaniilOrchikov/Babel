@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="background-style index-style">
-    <form class="" method="post">
-        <div class="input-group mb-3">
+    <div class="content-gif"><img class="img-size book-gif-size" src="static/img/cat-runs.gif" alt="кот куда-то бежит">
+    </div>
+    <form class="browse-form-style" method="post">
+        <div class="input-group mb-3 form-browse">
             <input type="text" class="form-control" placeholder="Введите номер комнаты" aria-label="3"
                 aria-describedby="basic-addon2" name="room">
         </div>
@@ -31,13 +33,13 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 form-browse">
             <input type="text" class="form-control" placeholder="Введите номер страницы: 1 - 410" aria-label="3"
                 aria-describedby="basic-addon2" name="page">
         </div>
         <div class="message">{{ message_page }}</div>
         <div class="message">{{ message }}</div>
-        <button type="submit" class="btn btn-primary">Отправить</button>
+        <button type="submit" class="btn btn-dark">Отправить</button>
     </form>
 </div>
 {% endblock %}
