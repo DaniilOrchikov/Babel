@@ -81,12 +81,19 @@ def browse():
         return redirect(f'/image{room}-{wall}-{shelf}-{book}-{page}')
 
 
-@app.route('/image<string:address>')
+@app.route('/image<string:address>', methods=['POST', 'GET'])
 def image(address):
     """выбранная/случайная книга"""
     page = address.split("-")[-1]
     data = get(f'http://127.0.0.1:8080/api/page/a/{address}').json()['image']
-    return render_template('book.html', title='Книга', picture_name=data, number_page=page)
+    if request.method == 'GET':
+        return render_template('book.html', title='Книга', picture_name=data, number_page=page, name=None)
+    elif request.method == 'POST':
+        left = request.form.get('left')
+        right = request.form.get('right')
+        print(left, right)
+        # кнопка, которая нажата, будет возвращать пробел, которая не нажата - None
+        return render_template('book.html', title='Книга', picture_name=data, number_page=page, name=None)
 
 
 @app.route('/account')

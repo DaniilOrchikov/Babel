@@ -200,10 +200,6 @@
     width: 200px;
 }
 
-.content-gif {
-    margin-top: 5%;
-}
-
 .site-footer {
     min-width: 550px;
     background-color: #000;
@@ -415,6 +411,16 @@ blockquote cite {
     padding-bottom: 40px;
 }
 
+.book-next-page {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.book-next-page-style {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .form-browse {
     width: 300px;
 }
@@ -432,11 +438,14 @@ blockquote cite {
     padding-bottom: 10px;
 }
 
-.book-gif-size {
+.browse-gif-size {
     height: 70px;
     width: 150px;
 }
 
+.browse-content-gif {
+    margin-top: 8%;
+}
 @font-face {
     /* Гарнитура шрифта */
     font-family: 'Lato';
