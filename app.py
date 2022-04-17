@@ -1,3 +1,4 @@
+import base64
 import os
 from flask import Flask
 from requests import get
@@ -32,6 +33,9 @@ api.add_resource(Page, '/api/page/<string:r_type>/<string:request_str>')
 api.add_resource(RandomPage, '/api/random_page')
 
 
+scale = 2.2
+
+
 def main():
     db_session.global_init("db/data_base.db")
     app.run(port=8080, host='127.0.0.1')
@@ -45,6 +49,7 @@ def allowed_file(filename):
     """ Функция проверки расширения файла """
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -99,7 +104,6 @@ def browse():
 @app.route('/image<string:address>', methods=['POST', 'GET'])
 def image(address):
     """выбранная/случайная книга"""
-    scale = 2.2
     page = address.split("-")[-1]
     data = get(f'http://127.0.0.1:8080/api/page/a/{address}').json()
     if request.method == 'GET':
@@ -141,12 +145,14 @@ def search():
         return render_template('search.html', title='Поиск картинки')
     elif request.method == 'POST':
         radio = request.form.get('flexRadioDefault')
-        file = request.files['file']
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        print(radio, file)
+        file = request.files['file'].read()
+        # print(file)
+        data = get(f'http://127.0.0.1:8080/api/page/im/' + file).json()
         # активная radio button вернёт её название: первая radio1, вторая radio2
-        return redirect('/find_image')
+        return render_template('book.html', title='Книга', picture_name=data['image'], number_page='page',
+                               name=data['title'], width=babel.width * scale, height=babel.height * scale)
+
+        # return redirect('/find_image')
 
 
 @app.route('/find_image')

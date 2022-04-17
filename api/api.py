@@ -1,3 +1,5 @@
+import base64
+
 from flask import jsonify
 from flask_restful import Resource
 
