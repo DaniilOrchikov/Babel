@@ -12,9 +12,14 @@
 
 .book-style {
     height: 100%;
-    background: url('/static/img/bg-book.jpg');
+    background: url('/static/img/bg-book.jpg') no-repeat;
+    background-size: 100%
 }
 
+.browse-style {
+    height: 100%;
+    background: url('/static/img/bg-browse.jpg');
+}
 .sign-up-style {
     background: url('/static/img/bg_library.jpg') no-repeat;
     background-size: 100%;
@@ -394,7 +399,7 @@ blockquote cite {
 }
 
 .book-p {
-    font-size: 22px;
+    font-size: 24px;
 }
 
 .book-number-p {
@@ -425,7 +430,7 @@ blockquote cite {
 
 .book-next-page-style {
     padding-left: 10px;
-    padding-right: 30px;
+    padding-right: 20px;
 }
 
 .book-last-page-style {
@@ -439,6 +444,7 @@ blockquote cite {
 
 .browse-form-style {
     padding-top: 5px;
+    padding-bottom: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -456,7 +462,7 @@ blockquote cite {
 }
 
 .browse-content-gif {
-    margin-top: 8%;
+    padding-top: 8%;
 }
 
 @font-face {

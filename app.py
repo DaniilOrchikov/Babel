@@ -86,11 +86,12 @@ def browse():
 @app.route('/image<string:address>', methods=['POST', 'GET'])
 def image(address):
     """выбранная/случайная книга"""
+    scale = 2.4
     page = address.split("-")[-1]
     data = get(f'http://127.0.0.1:8080/api/page/a/{address}').json()
     if request.method == 'GET':
         return render_template('book.html', title='Книга', picture_name=data['image'], number_page=page,
-                               name=data['title'])
+                               name=data['title'], width=babel.width * scale, height=babel.height * scale)
     elif request.method == 'POST':
         left = request.form.get('left')
         right = request.form.get('right')
@@ -105,7 +106,7 @@ def image(address):
         elif full_right is not None:
             return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-410"}')
         return render_template('book.html', title='Книга', picture_name=data['image'], number_page=page,
-                               name=data['title'])
+                               name=data['title'], width=babel.width * scale, height=babel.height * scale)
 
 
 @app.route('/account')
