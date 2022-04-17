@@ -1,25 +1,20 @@
-.index-style {
-    height: 100vh;
-}
-
-.info-style {
+.height-style-percent {
     height: 100%;
 }
 
-.sign-in-style {
+.height-style-vh {
     height: 100vh;
 }
 
-.book-style {
-    height: 100%;
+.search-book-style {
     background: url('/static/img/bg-book.jpg') no-repeat;
     background-size: 100%
 }
 
 .browse-style {
-    height: 100%;
     background: url('/static/img/bg-browse.jpg');
 }
+
 .sign-up-style {
     background: url('/static/img/bg_library.jpg') no-repeat;
     background-size: 100%;
@@ -124,12 +119,10 @@
 }
 
 .nav-link {
-    /*цвет ссылок навигици*/
     color: #000;
 }
 
 .nav-img {
-    /*картинки в панели навигации*/
     height: 39.9px;
     width: 40px;
 }
@@ -141,7 +134,6 @@
 
 .nav-link:hover {
     background: #000;
-    /* Цвет ссылки при наведении на нее курсора мыши */
     color: #fff;
 }
 
@@ -370,24 +362,14 @@ blockquote cite {
 
 .book-container {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding-left: 100px;
-    padding-bottom: 100px;
-}
-
-.book-container-right {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 10px;
+    padding-left: 100px;
+    padding-bottom: 100px;
 
 }
 
-.book-container-left {
-    padding-top: 20%;
-}
 
 .image-book-style {
     image-rendering: pixelated;
@@ -428,7 +410,7 @@ blockquote cite {
     flex-direction: row;
 }
 
-.book-next-page-style {
+.book-download-image {
     padding-left: 10px;
     padding-right: 20px;
 }
@@ -463,6 +445,15 @@ blockquote cite {
 
 .browse-content-gif {
     padding-top: 8%;
+}
+
+.book-link {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.book-link:focus {
+    color: #fff;
 }
 
 @font-face {

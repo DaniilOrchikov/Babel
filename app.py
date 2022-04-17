@@ -86,7 +86,7 @@ def browse():
 @app.route('/image<string:address>', methods=['POST', 'GET'])
 def image(address):
     """выбранная/случайная книга"""
-    scale = 2.4
+    scale = 2.2
     page = address.split("-")[-1]
     data = get(f'http://127.0.0.1:8080/api/page/a/{address}').json()
     if request.method == 'GET':
@@ -124,7 +124,7 @@ def random_book():
 @app.route('/search')
 def search():
     """страница с поиском картинки"""
-    return render_template('search.html', title='Поиск картинок')
+    return render_template('search.html', title='Поиск картинки')
 
 
 @app.route('/sign_up', methods=['GET', 'POST'])
