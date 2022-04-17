@@ -1,18 +1,18 @@
 from flask import Flask
+from requests import get
 from flask import request
 from flask import redirect
-from requests import get
 from data import db_session
 from data.users import User
 from flask_restful import Api
 from flask import render_template
+from library_of_babel import babel
+from forms.user import LoginForm
 from forms.user import RegisterForm
 from flask_login import LoginManager
 from flask_login import login_user
 from flask_login import logout_user
 from flask_login import login_required
-from forms.user import LoginForm
-from library_of_babel import babel
 from api.api import BookList, RandomPage, Page
 
 app = Flask(__name__)
@@ -71,10 +71,12 @@ def browse():
                                    message="Введите номер страницы")
         elif len(room) % 3 != 0:
             return render_template('browse.html', title='Библиотека',
-                                   message_room="Некорректные данные номера комнаты(количество символов должно быть кратно 3)")
+                                   message_room="Некорректные данные номера "
+                                                "комнаты(количество символов должно быть кратно 3)")
         elif not all(map(lambda x: x in babel.used_symbols, room)):
             return render_template('browse.html', title='Библиотека',
-                                   message_room=f"Некорректные данные номера комнаты(можно использовать только символы: {babel.used_symbols})")
+                                   message_room=f"Некорректные данные номера комнаты(можно использовать "
+                                                f"только символы: {babel.used_symbols})")
         elif not (0 < int(page) < 411) or not (page.isdigit()):
             return render_template('browse.html', title='Библиотека',
                                    message_page="Некорректные данные номера страницы")
@@ -92,14 +94,16 @@ def image(address):
     elif request.method == 'POST':
         left = request.form.get('left')
         right = request.form.get('right')
-        # нужно сделать еще две кнопки - переход сразу к первой и к последней странице
-        # к первой - return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-1"}')
-        # к последней - return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-410"}')
-        # и еще нужно при клике на логотип сайта сделать переход на главную страницу
+        full_left = request.form.get('full-left')
+        full_right = request.form.get('full-right')
         if left is not None and int(page) > 1:
             return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-" + str((int(page) - 1))}')
         elif right is not None and int(page) < babel.page:
             return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-" + str((int(page) + 1))}')
+        elif full_left is not None:
+            return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-1"}')
+        elif full_right is not None:
+            return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-410"}')
         return render_template('book.html', title='Книга', picture_name=data['image'], number_page=page,
                                name=data['title'])
 

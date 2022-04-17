@@ -2,7 +2,8 @@
 {% block content %}
 <div class="book-style">
     <div class="book-container">
-        <div class="book-container-left"><a href="{{picture_name}}" download="{{name}}_{{number_page}}">скачать изображение</a></div>
+        <div class="book-container-left"><a href="{{picture_name}}" download="{{name}}_{{number_page}}">скачать
+                изображение</a></div>
         <div class="book-container-right">
             <div class="book-number-style">
                 <p class="font-style book-number-p"><span> Page {{number_page}} of 410</span></p>
@@ -12,11 +13,15 @@
             </div>
             <div><img class="image-book-style image-book-frame" src="{{picture_name}}"></div>
             <form method="post">
-            <div class="book-next-page">
-            <button type="submit" class="btn btn-outline-dark" name="left"><<</button>
-                <div class="book-next-page-style"></div>
-            <button type="submit" class="btn btn-outline-dark" name="right">>></button>
-            </div>
+                <div class="book-next-page">
+                    <button type="submit" class="btn btn-outline-dark" name="full-left"><</button>
+                    <div class="book-last-page-style"></div>
+                    <button type="submit" class="btn btn-outline-dark" name="left"><<</button>
+                    <div class="book-next-page-style"></div>
+                    <button type="submit" class="btn btn-outline-dark" name="right">></button>
+                    <div class="book-last-page-style"></div>
+                    <button type="submit" class="btn btn-outline-dark" name="full-right">>></button>
+                </div>
             </form>
         </div>
     </div>

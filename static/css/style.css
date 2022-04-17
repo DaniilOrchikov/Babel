@@ -60,6 +60,8 @@
 }
 
 .right-title {
+    color: #000;
+    text-decoration: none;
     font-size: 22pt;
     line-height: 50px;
     font-weight: 500;
@@ -68,6 +70,10 @@
     overflow: hidden;
     text-transform: uppercase;
     text-align: center;
+}
+
+.right-title:hover {
+    color: #000;
 }
 
 .right-title:before {
@@ -383,13 +389,12 @@ blockquote cite {
 }
 
 .image-book-frame {
-    padding: 30px;
-    background: #f0f0f0;
-    border: 2px solid #666;
+    padding: 5px;
+    background: #000;
 }
 
 .book-p {
-    font-size: 26px;
+    font-size: 22px;
 }
 
 .book-number-p {
@@ -413,14 +418,19 @@ blockquote cite {
 }
 
 .book-next-page {
-    padding-top: 10px;
+    padding-top: 50px;
     display: flex;
     flex-direction: row;
 }
 
 .book-next-page-style {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 30px;
+    padding-right: 90px;
+}
+
+.book-last-page-style {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .form-browse {
