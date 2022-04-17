@@ -11,7 +11,7 @@
 }
 
 .book-style {
-    height: 100vh;
+    height: 100%;
     background: url('/static/img/bg-book.jpg');
 }
 
@@ -362,6 +362,7 @@ blockquote cite {
     flex-direction: row;
     justify-content: flex-start;
     padding-left: 100px;
+    padding-bottom: 100px;
 }
 
 .book-container-right {
@@ -369,7 +370,7 @@ blockquote cite {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 16%;
+    margin-left: 10px;
 
 }
 
@@ -378,7 +379,7 @@ blockquote cite {
 }
 
 .image-book-style {
-    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
 }
 
 .image-book-frame {
@@ -416,6 +417,7 @@ blockquote cite {
     display: flex;
     flex-direction: row;
 }
+
 .book-next-page-style {
     padding-left: 10px;
     padding-right: 10px;
@@ -446,6 +448,7 @@ blockquote cite {
 .browse-content-gif {
     margin-top: 8%;
 }
+
 @font-face {
     /* Гарнитура шрифта */
     font-family: 'Lato';

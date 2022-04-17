@@ -58,7 +58,7 @@ class Babel:
         self.alphabet_len = len(self.alphabet)
         self.lengthOfTitle = 31
 
-        self.width, self.height = 360, 310
+        self.width, self.height = 420, 220
         self.lengthOfPage = self.width * self.height
 
         self.wall = 4
