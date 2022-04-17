@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from requests import get
 from flask import request
@@ -14,9 +15,16 @@ from flask_login import login_user
 from flask_login import logout_user
 from flask_login import login_required
 from api.api import BookList, RandomPage, Page
+from werkzeug.utils import secure_filename
+
+# папка для сохранения загруженных файлов
+UPLOAD_FOLDER = '/static/search_image'
+# расширения файлов, которые разрешено загружать
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 api = Api(app)
 api.add_resource(BookList, '/api/book_list/<string:address>')
@@ -32,6 +40,11 @@ def main():
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
+def allowed_file(filename):
+    """ Функция проверки расширения файла """
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -121,10 +134,25 @@ def random_book():
     return redirect(f'/image{address}')
 
 
-@app.route('/search')
+@app.route('/search', methods=['POST', 'GET'])
 def search():
     """страница с поиском картинки"""
-    return render_template('search.html', title='Поиск картинки')
+    if request.method == 'GET':
+        return render_template('search.html', title='Поиск картинки')
+    elif request.method == 'POST':
+        radio = request.form.get('flexRadioDefault')
+        file = request.files['file']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        print(radio, file)
+        # активная radio button вернёт её название: первая radio1, вторая radio2
+        return redirect('/find_image')
+
+
+@app.route('/find_image')
+def find_image():
+    """страница с найденной картинкой"""
+    return render_template('find_image.html', title='Найденная картинка')
 
 
 @app.route('/sign_up', methods=['GET', 'POST'])

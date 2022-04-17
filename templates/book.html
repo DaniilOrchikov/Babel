@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="search-book-style height-style-percent">
+<div class="find-search-book-style height-style-percent">
     <div class="book-container">
         <div class="book-number-style">
             <p class="font-style book-number-p"><span> Page {{number_page}} of 410</span></p>
         </div>
         <div>
-            <p class="book-p font-style"><strong>Image name: {{name}}</strong></p>
+            <p class="book-p font-style"><strong>Book name: {{name}}</strong></p>
         </div>
         <div><img width="{{ width }}px" height="{{ height }}px" class="image-book-style image-book-frame"
                 src="{{picture_name}}"></div>
@@ -15,8 +15,8 @@
                 <button type="submit" class="btn btn-outline-dark" name="full-left"><<</button>
                 <div class="book-last-page-style"></div>
                 <button type="submit" class="btn btn-outline-dark" name="left"><</button>
-                <div class="book-download-image"><a class="nav-link book-link" href="{{picture_name}}"
-                        download="{{name}}_{{number_page}}">скачать изображение</a></div>
+                <div><a class="nav-link book-link" href="{{picture_name}}"
+                        download="{{name}}_{{number_page}}.jpeg">скачать изображение</a></div>
                 <button type="submit" class="btn btn-outline-dark" name="right">></button>
                 <div class="book-last-page-style"></div>
                 <button type="submit" class="btn btn-outline-dark" name="full-right">>></button>

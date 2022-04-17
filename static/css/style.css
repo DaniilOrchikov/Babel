@@ -6,7 +6,7 @@
     height: 100vh;
 }
 
-.search-book-style {
+.find-search-book-style {
     background: url('/static/img/bg-book.jpg') no-repeat;
     background-size: 100%
 }
@@ -365,7 +365,6 @@ blockquote cite {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-left: 100px;
     padding-bottom: 100px;
 
 }
@@ -410,11 +409,6 @@ blockquote cite {
     flex-direction: row;
 }
 
-.book-download-image {
-    padding-left: 10px;
-    padding-right: 20px;
-}
-
 .book-last-page-style {
     padding-left: 5px;
     padding-right: 5px;
@@ -455,7 +449,6 @@ blockquote cite {
 .book-link:focus {
     color: #fff;
 }
-
 @font-face {
     /* Гарнитура шрифта */
     font-family: 'Lato';
