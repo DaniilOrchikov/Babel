@@ -85,15 +85,21 @@ def browse():
 def image(address):
     """выбранная/случайная книга"""
     page = address.split("-")[-1]
-    data = get(f'http://127.0.0.1:8080/api/page/a/{address}').json()['image']
+    data = get(f'http://127.0.0.1:8080/api/page/a/{address}').json()
     if request.method == 'GET':
-        return render_template('book.html', title='Книга', picture_name=data, number_page=page, name=None)
+        return render_template('book.html', title='Книга', picture_name=data['image'], number_page=page, name=data['title'])
     elif request.method == 'POST':
         left = request.form.get('left')
         right = request.form.get('right')
-        print(left, right)
-        # кнопка, которая нажата, будет возвращать пробел, которая не нажата - None
-        return render_template('book.html', title='Книга', picture_name=data, number_page=page, name=None)
+        # нужно сделать еще две кнопки - переход сразу к первой и к последней странице
+        # к первой - return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-1"}')
+        # к последней - return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-410"}')
+        # и еще нужно при клике на логотип сайта сделать переход на главную страницу
+        if left is not None and int(page) > 1:
+            return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-" + str((int(page) - 1))}')
+        elif right is not None and int(page) < babel.page:
+            return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-" + str((int(page) + 1))}')
+        return render_template('book.html', title='Книга', picture_name=data['image'], number_page=page, name=data['title'])
 
 
 @app.route('/account')
