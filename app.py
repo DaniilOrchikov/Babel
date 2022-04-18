@@ -102,9 +102,6 @@ def image(id):
         right = request.args.get('right')
         full_left = request.args.get('full-left')
         full_right = request.args.get('full-right')
-        save_id = int(request.cookies.get('id', 0))
-        if not save_id:
-            id = save_id
         db_sess = db_session.create_session()
         save = db_sess.query(QuickSaves).filter(QuickSaves.id == int(id)).first()
         data = {'image': save.image,
@@ -137,9 +134,6 @@ def image(id):
             return redirect(f'/image{id}')
         res = make_response(render_template('book.html', title='Книга', picture_name=data['image'], number_page=page,
                                             name=data['title'], width=babel.width * scale, height=babel.height * scale))
-        save_id = int(request.cookies.get('id', 0))
-        if not save_id:
-            res.set_cookie('id', str(save.id))
         return res
 
 
