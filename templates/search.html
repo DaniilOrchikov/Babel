@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="find-search-book-style height-style-vh">
-    <form action="" method=post enctype=multipart/form-data>
+    <div class="search-container">
+    <div><img class="book-search-img" src="static/img/book.jpg" alt="много книг"></div>
+    <div class="search-form">
+    <form class="search-form-style" action="" method=post enctype=multipart/form-data>
         <div class="form-check">
             <input class="form-check-input form-check-label-color" type="radio" name="flexRadioDefault"
                    id="flexRadioDefault1" value="radio1">
@@ -20,7 +23,10 @@
             <label for="formFile" class="form-label">Добавьте изображение для поиска</label>
             <input class="form-control" type="file" id="formFile" name="file">
         </div>
-        <button type="submit" class="btn btn-light">Найти</button>
+        <button type="submit" class="btn btn-secondary">Найти</button>
     </form>
+    </div>
+     <div><img class="book-search-img gif-rotate" src="static/img/book.jpg" alt="много книг"></div>
+    </div>
 </div>
 {% endblock %}

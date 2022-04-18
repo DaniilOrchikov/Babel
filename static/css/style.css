@@ -400,7 +400,7 @@ blockquote cite {
 
 .book-number-style {
     padding-top: 15px;
-    padding-bottom: 40px;
+    padding-bottom: 10px;
 }
 
 .book-next-page {
@@ -428,6 +428,7 @@ blockquote cite {
 }
 
 .message {
+    font-weight: bold;
     color: #fff;
     padding-bottom: 10px;
 }
@@ -449,6 +450,47 @@ blockquote cite {
 .book-link:focus {
     color: #fff;
 }
+
+.form-check-input:checked {
+    background-color: #000;
+    border-color: #000;
+}
+
+.search-form-style {
+    width: 700px;
+    height: 50%;
+    max-height: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 700px;
+    background-color: #fff;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.search-form {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.book-search-img {
+    height: 100vh;
+    width: 100%;
+}
+
+.info-book-style {
+    font-size: 20px;
+    font-style: italic;
+}
+
 @font-face {
     /* Гарнитура шрифта */
     font-family: 'Lato';

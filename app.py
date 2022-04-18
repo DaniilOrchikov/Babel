@@ -16,14 +16,8 @@ from flask_login import logout_user
 from flask_login import login_required
 from api.api import BookList, RandomPage, Page
 
-# папка для сохранения загруженных файлов
-UPLOAD_FOLDER = '/static/search_image'
-# расширения файлов, которые разрешено загружать
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 api = Api(app)
 api.add_resource(BookList, '/api/book_list/<string:address>')
