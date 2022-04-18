@@ -13,6 +13,8 @@ parser.add_argument('file', type=werkzeug.datastructures.FileStorage,
                     location='files',
                     required=True,
                     help='provide a file')
+parser_1 = reqparse.RequestParser()
+parser_1.add_argument('str')
 
 
 class BookList(Resource):
@@ -66,7 +68,8 @@ class Page(Resource):
                 }
             )
         elif r_type == 'a':
-            address = request_str
+            args = parser_1.parse_args()
+            address = args['str']
             title = babel.get_title(address)
             image = babel.create_im(address)
             image = image.decode()

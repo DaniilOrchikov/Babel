@@ -117,22 +117,26 @@ def image(id):
                 'title': save.title}
         page = data['address'].split("-")[-1]
         if left is not None and int(page) > 1:
-            id = get(f'http://127.0.0.1:8080/api/page/a/{"-".join(data["address"].split("-")[:-1]) + "-" + str((int(page) - 1))}').json()['id']
+            id = get(f'http://127.0.0.1:8080/api/page/a/1',
+                     json={'str': "-".join(data["address"].split("-")[:-1]) + "-" + str((int(page) - 1))}).json()['id']
             db_sess.delete(save)
             db_sess.commit()
             return redirect(f'/image{id}')
         elif right is not None and int(page) < babel.page:
-            id = get(f'http://127.0.0.1:8080/api/page/a/{"-".join(data["address"].split("-")[:-1]) + "-" + str((int(page) + 1))}').json()['id']
+            id = get(f'http://127.0.0.1:8080/api/page/a/1',
+                     json={'str': "-".join(data["address"].split("-")[:-1]) + "-" + str((int(page) + 1))}).json()['id']
             db_sess.delete(save)
             db_sess.commit()
             return redirect(f'/image{id}')
         elif full_left is not None:
-            id = get(f'http://127.0.0.1:8080/api/page/a/{"-".join(data["address"].split("-")[:-1]) + "-1"}').json()['id']
+            id = get(f'http://127.0.0.1:8080/api/page/a/1',
+                     json={'str': "-".join(data["address"].split("-")[:-1]) + "-1"}).json()['id']
             db_sess.delete(save)
             db_sess.commit()
             return redirect(f'/image{id}')
         elif full_right is not None:
-            id = get(f'http://127.0.0.1:8080/api/page/a/{"-".join(data["address"].split("-")[:-1]) + "-410"}').json()['id']
+            id = get(f'http://127.0.0.1:8080/api/page/a/1',
+                     json={'str': "-".join(data["address"].split("-")[:-1]) + "-410"}).json()['id']
             db_sess.delete(save)
             db_sess.commit()
             return redirect(f'/image{id}')
