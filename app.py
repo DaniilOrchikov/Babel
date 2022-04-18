@@ -132,8 +132,10 @@ def image(id):
             db_sess.delete(save)
             db_sess.commit()
             return redirect(f'/image{id}')
+        address = data['address'].split('-')
         res = make_response(render_template('book.html', title='Книга', picture_name=data['image'], number_page=page,
-                                            name=data['title'], width=babel.width * scale, height=babel.height * scale))
+                                            name=data['title'], width=babel.width * scale, height=babel.height * scale,
+                                            hex=address[0], shelf=address[1], volume=address[2]))
         return res
 
 
