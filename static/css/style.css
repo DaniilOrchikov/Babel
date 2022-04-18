@@ -12,7 +12,8 @@
 }
 
 .browse-style {
-    background: url('/static/img/bg-browse.jpg');
+    background: url('/static/img/bg-browse.jpg') no-repeat;
+    background-size: 100%
 }
 
 .sign-up-style {
@@ -26,7 +27,8 @@
     left: 0;
     width: 100%;
     padding-top: 20px;
-    background: url('/static/img/bg.jpg');
+    background: url('/static/img/bg.jpg') no-repeat;
+    background-size: 100%;
 }
 
 .font-style {
@@ -365,7 +367,7 @@ blockquote cite {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 100px;
+    padding-bottom: 5%;
 
 }
 
@@ -473,6 +475,8 @@ blockquote cite {
 .search-form {
     margin-top: auto;
     margin-bottom: auto;
+    padding-left: 1%;
+    padding-right: 1%;
 }
 
 .search-container {
