@@ -95,7 +95,8 @@ def browse():
         elif not (0 < int(page) < 411) or not (page.isdigit()):
             return render_template('browse.html', title='Библиотека',
                                    message_page="Некорректные данные номера страницы")
-        id = get(f'http://127.0.0.1:8080/api/page/a/{room}-{wall}-{shelf}-{book}-{page}').json()['id']
+        id = get(f'http://127.0.0.1:8080/api/page/a/1',
+                 json={'str': f'{room}-{wall}-{shelf}-{book}-{page}'}).json()['id']
         return redirect(f'/image{id}')
 
 
