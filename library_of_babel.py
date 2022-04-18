@@ -107,10 +107,17 @@ class Babel:
         st = ''
         for i in range(height):
             for j in range(width):
-                r, g, b = pix[j, i]
-                r, g, b = r // (256 // self.number_of_colors), \
-                          g // (256 // self.number_of_colors), \
-                          b // (256 // self.number_of_colors)
+                if len(pix[j, i]) == 3:
+                    r, g, b = pix[j, i]
+                    r, g, b = r // (256 // self.number_of_colors), \
+                              g // (256 // self.number_of_colors), \
+                              b // (256 // self.number_of_colors)
+                else:
+                    r, g, b, h = pix[j, i]
+                    r, g, b, h = r // (256 // self.number_of_colors), \
+                                 g // (256 // self.number_of_colors), \
+                                 b // (256 // self.number_of_colors), \
+                                 255
                 st += self.used_symbols[r] + self.used_symbols[g] + self.used_symbols[b]
         return st, width, height
 
@@ -131,7 +138,7 @@ class Babel:
                             self.used_symbols.index(m[i][j][1]) * (256 // self.number_of_colors), \
                             self.used_symbols.index(m[i][j][2]) * (256 // self.number_of_colors)
         img_byte_arr = io.BytesIO()
-        img.save(img_byte_arr, format='JPEG')
+        img.save(img_byte_arr, format='PNG')
         img_byte_arr = img_byte_arr.getvalue()
         return base64.b64encode(img_byte_arr)
 

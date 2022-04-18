@@ -10,16 +10,16 @@
         </div>
         <div><img width="{{ width }}px" height="{{ height }}px" class="image-book-style image-book-frame"
                 src="{{picture_name}}"></div>
-        <form method="post">
+        <form method="get">
             <div class="book-next-page">
-                <button type="submit" class="btn btn-outline-dark" name="full-left"><<</button>
+                <button type="submit" class="btn btn-outline-dark" name="full-left" value="full-left"><<</button>
                 <div class="book-last-page-style"></div>
-                <button type="submit" class="btn btn-outline-dark" name="left"><</button>
+                <button type="submit" class="btn btn-outline-dark" name="left" value="left"><</button>
                 <div><a class="nav-link book-link" href="{{picture_name}}"
-                        download="{{name}}_{{number_page}}.jpeg">скачать изображение</a></div>
-                <button type="submit" class="btn btn-outline-dark" name="right">></button>
+                        download="{{name}}_{{number_page}}.png">скачать изображение</a></div>
+                <button type="submit" class="btn btn-outline-dark" name="right" value="right">></button>
                 <div class="book-last-page-style"></div>
-                <button type="submit" class="btn btn-outline-dark" name="full-right">>></button>
+                <button type="submit" class="btn btn-outline-dark" name="full-right" value="full_right">>></button>
             </div>
         </form>
     </div>

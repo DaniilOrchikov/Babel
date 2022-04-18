@@ -1,12 +1,11 @@
-import base64
-import os
-from flask import Flask
+from flask import Flask, make_response
 from requests import get
 from flask import request
 from flask import redirect
 from data import db_session
+from data.quick_saves import QuickSaves
 from data.users import User
-from flask_restful import Api
+from flask_restful import Api, reqparse
 from flask import render_template
 from library_of_babel import babel
 from forms.user import LoginForm
@@ -16,7 +15,6 @@ from flask_login import login_user
 from flask_login import logout_user
 from flask_login import login_required
 from api.api import BookList, RandomPage, Page
-from werkzeug.utils import secure_filename
 
 # папка для сохранения загруженных файлов
 UPLOAD_FOLDER = '/static/search_image'
@@ -31,7 +29,6 @@ api = Api(app)
 api.add_resource(BookList, '/api/book_list/<string:address>')
 api.add_resource(Page, '/api/page/<string:r_type>/<string:request_str>')
 api.add_resource(RandomPage, '/api/random_page')
-
 
 scale = 2.2
 
@@ -98,32 +95,53 @@ def browse():
         elif not (0 < int(page) < 411) or not (page.isdigit()):
             return render_template('browse.html', title='Библиотека',
                                    message_page="Некорректные данные номера страницы")
-        return redirect(f'/image{room}-{wall}-{shelf}-{book}-{page}')
+        id = get(f'http://127.0.0.1:8080/api/page/a/{room}-{wall}-{shelf}-{book}-{page}').json()['id']
+        return redirect(f'/image{id}')
 
 
-@app.route('/image<string:address>', methods=['POST', 'GET'])
-def image(address):
+@app.route('/image<string:id>', methods=['POST', 'GET'])
+def image(id):
     """выбранная/случайная книга"""
-    page = address.split("-")[-1]
-    data = get(f'http://127.0.0.1:8080/api/page/a/{address}').json()
     if request.method == 'GET':
-        return render_template('book.html', title='Книга', picture_name=data['image'], number_page=page,
-                               name=data['title'], width=babel.width * scale, height=babel.height * scale)
-    elif request.method == 'POST':
-        left = request.form.get('left')
-        right = request.form.get('right')
-        full_left = request.form.get('full-left')
-        full_right = request.form.get('full-right')
+        left = request.args.get('left')
+        right = request.args.get('right')
+        full_left = request.args.get('full-left')
+        full_right = request.args.get('full-right')
+        save_id = int(request.cookies.get('id', 0))
+        if not save_id:
+            id = save_id
+        db_sess = db_session.create_session()
+        save = db_sess.query(QuickSaves).filter(QuickSaves.id == int(id)).first()
+        data = {'image': save.image,
+                'address': save.address,
+                'title': save.title}
+        page = data['address'].split("-")[-1]
         if left is not None and int(page) > 1:
-            return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-" + str((int(page) - 1))}')
+            id = get(f'http://127.0.0.1:8080/api/page/a/{"-".join(data["address"].split("-")[:-1]) + "-" + str((int(page) - 1))}').json()['id']
+            db_sess.delete(save)
+            db_sess.commit()
+            return redirect(f'/image{id}')
         elif right is not None and int(page) < babel.page:
-            return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-" + str((int(page) + 1))}')
+            id = get(f'http://127.0.0.1:8080/api/page/a/{"-".join(data["address"].split("-")[:-1]) + "-" + str((int(page) + 1))}').json()['id']
+            db_sess.delete(save)
+            db_sess.commit()
+            return redirect(f'/image{id}')
         elif full_left is not None:
-            return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-1"}')
+            id = get(f'http://127.0.0.1:8080/api/page/a/{"-".join(data["address"].split("-")[:-1]) + "-1"}').json()['id']
+            db_sess.delete(save)
+            db_sess.commit()
+            return redirect(f'/image{id}')
         elif full_right is not None:
-            return redirect(f'/image{"-".join(address.split("-")[:-1]) + "-410"}')
-        return render_template('book.html', title='Книга', picture_name=data['image'], number_page=page,
-                               name=data['title'], width=babel.width * scale, height=babel.height * scale)
+            id = get(f'http://127.0.0.1:8080/api/page/a/{"-".join(data["address"].split("-")[:-1]) + "-410"}').json()['id']
+            db_sess.delete(save)
+            db_sess.commit()
+            return redirect(f'/image{id}')
+        res = make_response(render_template('book.html', title='Книга', picture_name=data['image'], number_page=page,
+                                            name=data['title'], width=babel.width * scale, height=babel.height * scale))
+        save_id = int(request.cookies.get('id', 0))
+        if not save_id:
+            res.set_cookie('id', str(save.id))
+        return res
 
 
 @app.route('/account')
@@ -134,8 +152,8 @@ def personal_account():
 
 @app.route('/random_book')
 def random_book():
-    address = get(f'http://127.0.0.1:8080/api/random_page').json()['address']
-    return redirect(f'/image{address}')
+    id = get(f'http://127.0.0.1:8080/api/random_page').json()['id']
+    return redirect(f'/image{id}')
 
 
 @app.route('/search', methods=['POST', 'GET'])
@@ -145,20 +163,10 @@ def search():
         return render_template('search.html', title='Поиск картинки')
     elif request.method == 'POST':
         radio = request.form.get('flexRadioDefault')
-        file = request.files['file'].read()
-        # print(file)
-        data = get(f'http://127.0.0.1:8080/api/page/im/' + file).json()
-        # активная radio button вернёт её название: первая radio1, вторая radio2
-        return render_template('book.html', title='Книга', picture_name=data['image'], number_page='page',
-                               name=data['title'], width=babel.width * scale, height=babel.height * scale)
-
-        # return redirect('/find_image')
-
-
-@app.route('/find_image')
-def find_image():
-    """страница с найденной картинкой"""
-    return render_template('find_image.html', title='Найденная картинка')
+        file = request.files['file']
+        id = get(f'http://127.0.0.1:8080/api/page/im/' + ('ex' if radio == 'radio1' else 'n'),
+                 files={'file': file}).json()['id']
+        return redirect(f'/image{id}')
 
 
 @app.route('/sign_up', methods=['GET', 'POST'])
