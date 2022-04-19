@@ -5,20 +5,23 @@
         <div class="book-number-style">
             <p class="font-style book-number-p"><span> Page {{number_page}} of 410</span></p>
         </div>
-        <div>
-            <p class="font-style info-book-style"><strong>Room: {{hex}}</strong></p>
+        <div class="book-room-content">
+            <p class="font-style info-book-style text-book">Room:</p>
+            <p class="lead font-style book-room-p info-book-style text-book" id="copytext">{{hex}}</p>
+        </div>
+        <div><a href="#" data-clipboard-target="#copytext" class="pull-right copy-text">[Копировать номер комнаты]</a>
         </div>
         <div>
-            <p class="font-style info-book-style"><strong>Wall: {{shelf}}</strong></p>
+            <p class="font-style info-book-style text-book">Wall: {{shelf}}</p>
         </div>
         <div>
-            <p class="font-style info-book-style"><strong>Shelf: {{volume}}</strong></p>
+            <p class="font-style info-book-style text-book">Shelf: {{volume}}</p>
         </div>
         <div>
-            <p class="book-p font-style"><strong>Book name: {{name}}</strong></p>
+            <p class="book-p font-style text-book">Book name: {{name}}</p>
         </div>
         <div><img width="{{ width }}px" height="{{ height }}px" class="image-book-style image-book-frame"
-                  src="{{picture_name}}"></div>
+                src="{{picture_name}}"></div>
         <form method="get">
             <div class="book-next-page">
                 <button type="submit" class="btn btn-outline-dark" name="full-left" value="full-left"><<</button>
@@ -32,5 +35,8 @@
             </div>
         </form>
     </div>
+    <script>
+        var clipboard = new Clipboard('.copy-text');
+    </script>
 </div>
 {% endblock %}

@@ -36,7 +36,6 @@
 }
 
 .header-top {
-    /* Цвет и расположение панели навигации*/
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -130,7 +129,6 @@
 }
 
 .nav-img-pos {
-    /*расположение картинки в панели навигации*/
     margin-right: 10px;
 }
 
@@ -179,7 +177,6 @@
 }
 
 .text-style {
-    /*стиль текста*/
     color: #000;
 }
 
@@ -197,7 +194,6 @@
 }
 
 .img-size {
-    /*Выравнивание по центру*/
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -383,6 +379,23 @@ blockquote cite {
 
 .book-p {
     font-size: 24px;
+}
+
+.text-book {
+    font-weight: bold;
+}
+
+.book-room-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.book-room-p {
+    padding-left: 2px;
+    width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .book-number-p {
