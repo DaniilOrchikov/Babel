@@ -311,12 +311,15 @@ blockquote cite {
     width: 500px;
     margin-left: auto;
     margin-right: auto;
-    max-width: 450px;
+    max-width: 50%;
     background-color: #fff;
     border: 1px solid gray;
     border-radius: 5px;
     padding: 10px;
-    margin-bottom: 10px;
+}
+
+.sign-up-content {
+    padding-bottom: 5%;
 }
 
 .sign-up-container {
@@ -335,11 +338,11 @@ blockquote cite {
 }
 
 .sign-up-h {
-    margin-top: 5px;
+    margin-top: 1%;
 }
 
 .sign-in-h {
-    margin-top: 5px;
+    margin-top: 2%;
 }
 
 .gif-sign-in {
@@ -388,6 +391,7 @@ blockquote cite {
 .book-room-content {
     display: flex;
     flex-direction: row;
+    padding-bottom: 1px;
 }
 
 .book-room-p {
@@ -506,6 +510,49 @@ blockquote cite {
 .info-book-style {
     font-size: 20px;
     font-style: italic;
+}
+
+.book-room-link {
+    color: #000;
+}
+
+.book-room-link:hover {
+    color: #fff;
+}
+
+.book-room-link:visited {
+    color: #fff;
+}
+
+/* The alert message box */
+.alert {
+    padding: 20px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.alert-in {
+    background-color: #754c2d;
+}
+
+.alert-out {
+    background-color: #82523c;
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
 }
 
 @font-face {

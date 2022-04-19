@@ -2,10 +2,27 @@
 {% block content %}
 <div class="background-style height-style-vh">
     <img class="img-size radius-style" src="static/img/book.gif" alt="книга">
-    <div class="main-text"><p class="title">Вавилонская библиотека</p></div>
+    <div class="main-text">
+        <p class="title">Вавилонская библиотека</p>
+    </div>
     <p class="link-located"><a class="text-style font-style link-style browse-page" href="/browse">Browse</a></p>
-        <p class="link-located"><a class=" text-style font-style link-style info-page" href="/search">Search</a></p>
+    {% if current_user.is_authenticated %}
+    <p class="link-located"><a class=" text-style font-style link-style info-page" href="/search">Search</a></p>
+    {% else %}
+    <p class="link-located"><a class=" text-style font-style link-style info-page" href="/">Search</a></p>
+    {% endif %}
     <p class="link-located"><a class=" text-style font-style link-style info-page" href="/random_book">Random</a></p>
-    <p class="link-located"><a class=" text-style font-style link-style info-page" href="/information">Information</a></p>
+    <p class="link-located"><a class=" text-style font-style link-style info-page" href="/information">Information</a>
+        {% if current_user.is_authenticated %}
+    <div class="alert alert-in">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        Вам доступна функция поиска "search".
+    </div>
+    {% else %}
+    <div class="alert alert-out">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        Зарегистрируйтесь или авторизуйтесь, чтобы воспользоваться функцией поиска "search".
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
