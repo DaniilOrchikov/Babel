@@ -31,13 +31,14 @@ scale = 2.2
 
 
 def main():
-    db_session.global_init("db/data_base.db")
+    db_session.global_init_user_base("db/data_base_user.db")
+    db_session.global_init_image_base("db/data_base_image.db")
     app.run(port=8080, host='127.0.0.1')
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    db_sess = db_session.create_session()
+    db_sess = db_session.create_session_user_base()
     return db_sess.query(User).get(user_id)
 
 
@@ -96,7 +97,7 @@ def image(id):
         right = request.args.get('right')
         full_left = request.args.get('full-left')
         full_right = request.args.get('full-right')
-        db_sess = db_session.create_session()
+        db_sess = db_session.create_session_image_base()
         save = db_sess.query(QuickSaves).filter(QuickSaves.id == int(id)).first()
         data = {'image': save.image,
                 'address': save.address,
@@ -155,7 +156,7 @@ def account():
                  files={'file': file}).json()['id']
         if id == 'wrong_pixel':
             return render_template('search.html', title='Поиск картинки',
-                                   error='В изображении не должно быть прозрачных пикселей')
+                                   error='В изображении не должно быть прозрачных и полупрозрачных пикселей')
         return redirect(f'/image{id}')
 
 
@@ -167,7 +168,7 @@ def sign_up():  # регистрация
             return render_template('sign_up.html', title='Регистрация',
                                    form=form,
                                    message="Пароли не совпадают")
-        db_sess = db_session.create_session()
+        db_sess = db_session.create_session_user_base()
         if db_sess.query(User).filter(User.email == form.email.data).first():
             return render_template('sign_up.html', title='Регистрация',
                                    form=form,
@@ -188,7 +189,7 @@ def sign_up():  # регистрация
 def sign_in():
     form = LoginForm()
     if form.validate_on_submit():
-        db_sess = db_session.create_session()
+        db_sess = db_session.create_session_user_base()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)

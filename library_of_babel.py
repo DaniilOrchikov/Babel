@@ -101,9 +101,9 @@ class Babel:
             else:
                 im = im.resize((int(self.height / height * width), self.height), Image.NEAREST)
         elif width > self.width:
-                im = im.resize((self.width, int(self.width / width * height)), Image.NEAREST)
+            im = im.resize((self.width, int(self.width / width * height)), Image.NEAREST)
         elif height > self.height:
-                im = im.resize((int(self.height / height * width), self.height), Image.NEAREST)
+            im = im.resize((int(self.height / height * width), self.height), Image.NEAREST)
         pix = im.load()
         width, height = im.size
         st = ''
@@ -202,14 +202,25 @@ class Babel:
         return str(hex) + '-' + str(wall) + '-' + str(shelf) + '-' + str(int(volume)) + '-' + str(int(page))
 
     def search_exactly(self, search_str, width, height):
+        w = random.randint(0, self.width - width)
+        h = random.randint(0, self.height - height)
         search_str = [search_str[j: j + 3] for j in range(0, len(search_str), 3) if len(search_str[j: j + 3]) == 3]
         searchArr = [list(i) for i in np.array(search_str).reshape(height, width)]
-        for i in range(self.height - height):
+        if w:
+            for i in range(height):
+                for j in range(w):
+                    searchArr[i].insert(0, self.alphabet[-1])
+        if h:
+            for i in range(h):
+                searchArr.insert(0, [])
+                for j in range(w + width):
+                    searchArr[0].append(self.alphabet[-1])
+        for i in range(self.height - height - h):
             searchArr.append([])
-            for j in range(width):
+            for j in range(width + w):
                 searchArr[-1].append(self.alphabet[-1])
         for i in range(self.height):
-            for j in range(self.width - width):
+            for j in range(self.width - width - w):
                 searchArr[i].append(self.alphabet[-1])
         search_str = ''.join(np.array(searchArr).flatten())
         return self.search(search_str, self.width, self.height)

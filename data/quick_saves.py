@@ -1,8 +1,8 @@
 import sqlalchemy
-from .db_session import SqlAlchemyBase
+from .db_session import SqlAlchemyImageBase
 
 
-class QuickSaves(SqlAlchemyBase):
+class QuickSaves(SqlAlchemyImageBase):
     __tablename__ = 'quick_saves'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,

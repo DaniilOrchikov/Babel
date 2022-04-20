@@ -1,5 +1,3 @@
-import base64
-
 import werkzeug.datastructures
 from flask import jsonify
 from flask_restful import Resource, reqparse
@@ -24,24 +22,6 @@ class BookList(Resource):
 
 
 class Page(Resource):
-    # def post(self, r_type, request_str):
-    #     args = parser.parse_args()
-    #     file = args['file'].read()
-    #
-    #     image = bytearray(file)
-    #     search_str, width, height = babel.create_str(image)
-    #     address = babel.search(search_str, width, height)
-    #     title = babel.get_title(address)
-    #     image = babel.create_im(address)
-    #     image = image.decode()
-    #     return jsonify(
-    #         {
-    #             'image': f'data:image/jpeg;base64,{image}',
-    #             'address': address,
-    #             'title': title
-    #         }
-    #     )
-
     def get(self, r_type, request_str):
         if r_type == 'im':
             args = parser.parse_args()
@@ -62,7 +42,7 @@ class Page(Resource):
             image = babel.create_im(address)
             image = image.decode()
 
-            db_sess = db_session.create_session()
+            db_sess = db_session.create_session_image_base()
             quick_save = QuickSaves(image=f'data:image/jpeg;base64,{image}',
                                     address=address,
                                     title=title)
@@ -80,7 +60,7 @@ class Page(Resource):
             image = babel.create_im(address)
             image = image.decode()
 
-            db_sess = db_session.create_session()
+            db_sess = db_session.create_session_image_base()
             quick_save = QuickSaves(image=f'data:image/jpeg;base64,{image}',
                                     address=address,
                                     title=title)
@@ -100,7 +80,7 @@ class RandomPage(Resource):
         image = babel.create_im(address)
         image = image.decode()
 
-        db_sess = db_session.create_session()
+        db_sess = db_session.create_session_image_base()
         quick_save = QuickSaves(image=f'data:image/jpeg;base64,{image}',
                                 address=address,
                                 title=title)
