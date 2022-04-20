@@ -16,8 +16,10 @@ parser_1.add_argument('str')
 
 
 class BookList(Resource):
-    def get(self, address):
-        titles = [babel.get_title(address + '-' + str(i)) for i in range(babel.volume)]
+    def get(self):
+        args = parser_1.parse_args()
+        file = args['str']
+        titles = [babel.get_title(file + '-' + str(i)) for i in range(babel.volume)]
         return jsonify({'titles': titles})
 
 

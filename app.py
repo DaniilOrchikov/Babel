@@ -21,7 +21,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 api = Api(app)
-api.add_resource(BookList, '/api/book_list/<string:address>')
+api.add_resource(BookList, '/api/book_list')
 api.add_resource(Page, '/api/page/<string:r_type>/<string:request_str>')
 api.add_resource(RandomPage, '/api/random_page')
 
@@ -67,28 +67,41 @@ def browse():
         room = request.form.get('room')
         wall = request.form.get('wall')
         shelf = request.form.get('shelf')
-        book = request.form.get('book')
+        book = request.form.get('flexRadioDefault')
         page = request.form.get('page')
-        if room == "":
-            return render_template('browse.html', title='Библиотека',
-                                   message="Введите номер комнаты")
-        elif page == "":
-            return render_template('browse.html', title='Библиотека',
-                                   message="Введите номер страницы")
-        elif len(room) % 3 != 0:
-            return render_template('browse.html', title='Библиотека',
-                                   message_room="Некорректные данные номера "
-                                                "комнаты(количество символов должно быть кратно 3)")
-        elif not all(map(lambda x: x in babel.used_symbols, room)):
-            return render_template('browse.html', title='Библиотека',
-                                   message_room=f"Некорректные данные номера комнаты(можно использовать "
-                                                f"только символы: {babel.used_symbols})")
-        elif not (0 < int(page) < 411) or not (page.isdigit()):
-            return render_template('browse.html', title='Библиотека',
-                                   message_page="Некорректные данные номера страницы")
-        id = get(f'http://' + request.host + '/api/page/a/1',
-                 json={'str': f'{room}-{wall}-{shelf}-{book}-{page}'}).json()['id']
-        return redirect(f'/image{id}')
+        next = request.form.get('next')
+        previous = request.form.get('previous')
+        if next is None and previous is None:
+            if room == "":
+                return render_template('browse.html', title='Библиотека',
+                                       message="Введите номер комнаты")
+            elif len(room) % 3 != 0:
+                return render_template('browse.html', title='Библиотека',
+                                       message_room="Некорректные данные номера "
+                                                    "комнаты(количество символов должно быть кратно 3)")
+            elif not all(map(lambda x: x in babel.used_symbols, room)):
+                return render_template('browse.html', title='Библиотека',
+                                       message_room=f"Некорректные данные номера комнаты(можно использовать "
+                                                    f"только символы: {babel.used_symbols})")
+            books_list = get(f'http://' + request.host + '/api/book_list',
+                             json={'str': f'{room}-{wall}-{shelf}'}).json()['titles']
+            return render_template('book_names.html', title='Информация', books_list=books_list, room=room, wall=wall,
+                                   shelf=shelf)
+        else:
+            print(f'{room}-{wall}-{shelf}-{book}-{page}')
+            books_list = get(f'http://' + request.host + '/api/book_list',
+                             json={'str': f'{room}-{wall}-{shelf}'}).json()['titles']
+            if previous is not None:
+                return render_template('browse.html', title='Библиотека')
+            if not (0 < int(page) < 411) or not (page.isdigit()):
+                return render_template('book_names.html', title='Информация', books_list=books_list, room=room,
+                                       wall=wall, shelf=shelf)
+            elif page is None:
+                return render_template('book_names.html', title='Информация', books_list=books_list, room=room,
+                                       wall=wall, shelf=shelf)
+            id = get(f'http://' + request.host + '/api/page/a/1',
+                     json={'str': f'{room}-{wall}-{shelf}-{book}-{page}'}).json()['id']
+            return redirect(f'/image{id}')
 
 
 @app.route('/books', methods=['POST', 'GET'])
