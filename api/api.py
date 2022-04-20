@@ -19,7 +19,7 @@ class BookList(Resource):
     def get(self):
         args = parser_1.parse_args()
         file = args['str']
-        titles = [babel.get_title(file + '-' + str(i)) for i in range(babel.volume)]
+        titles = [babel.get_title(file + '-' + str(i)) for i in range(1, babel.volume + 1)]
         return jsonify({'titles': titles})
 
 
