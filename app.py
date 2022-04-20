@@ -1,3 +1,4 @@
+import os
 from flask import Flask, make_response
 from requests import get
 from flask import request
@@ -33,7 +34,8 @@ scale = 2.2
 def main():
     db_session.global_init_user_base("db/data_base_user.db")
     db_session.global_init_image_base("db/data_base_image.db")
-    app.run(port=8080, host='127.0.0.1')
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 @login_manager.user_loader
@@ -84,7 +86,7 @@ def browse():
         elif not (0 < int(page) < 411) or not (page.isdigit()):
             return render_template('browse.html', title='Библиотека',
                                    message_page="Некорректные данные номера страницы")
-        id = get(f'http://127.0.0.1:8080/api/page/a/1',
+        id = get(f'http://' + request.host + '/api/page/a/1',
                  json={'str': f'{room}-{wall}-{shelf}-{book}-{page}'}).json()['id']
         return redirect(f'/image{id}')
 
@@ -112,25 +114,25 @@ def image(id):
                 'title': save.title}
         page = data['address'].split("-")[-1]
         if left is not None and int(page) > 1:
-            id = get(f'http://127.0.0.1:8080/api/page/a/1',
+            id = get(f'http://' + request.host + '/api/page/a/1',
                      json={'str': "-".join(data["address"].split("-")[:-1]) + "-" + str((int(page) - 1))}).json()['id']
             db_sess.delete(save)
             db_sess.commit()
             return redirect(f'/image{id}')
         elif right is not None and int(page) < babel.page:
-            id = get(f'http://127.0.0.1:8080/api/page/a/1',
+            id = get(f'http://' + request.host + '/api/page/a/1',
                      json={'str': "-".join(data["address"].split("-")[:-1]) + "-" + str((int(page) + 1))}).json()['id']
             db_sess.delete(save)
             db_sess.commit()
             return redirect(f'/image{id}')
         elif full_left is not None:
-            id = get(f'http://127.0.0.1:8080/api/page/a/1',
+            id = get(f'http://' + request.host + '/api/page/a/1',
                      json={'str': "-".join(data["address"].split("-")[:-1]) + "-1"}).json()['id']
             db_sess.delete(save)
             db_sess.commit()
             return redirect(f'/image{id}')
         elif full_right is not None:
-            id = get(f'http://127.0.0.1:8080/api/page/a/1',
+            id = get(f'http://' + request.host + '/api/page/a/1',
                      json={'str': "-".join(data["address"].split("-")[:-1]) + "-410"}).json()['id']
             db_sess.delete(save)
             db_sess.commit()
@@ -145,7 +147,7 @@ def image(id):
 @app.route('/random_book')
 def random_book():
     """случайная книга"""
-    id = get(f'http://127.0.0.1:8080/api/random_page').json()['id']
+    id = get(f'http://' + request.host + '/api/random_page').json()['id']
     return redirect(f'/image{id}')
 
 
@@ -161,7 +163,7 @@ def account():
         if file.filename.split('.')[-1] not in allowed_types:
             return render_template('search.html', title='Поиск картинки',
                                    error='Можно использовать только форматы ' + ', '.join(allowed_types))
-        id = get(f'http://127.0.0.1:8080/api/page/im/' + ('ex' if radio == 'radio1' else 'n'),
+        id = get(f'http://' + request.host + '/api/page/im/' + ('ex' if radio == 'radio1' else 'n'),
                  files={'file': file}).json()['id']
         if id == 'wrong_pixel':
             return render_template('search.html', title='Поиск картинки',
