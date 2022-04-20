@@ -22,6 +22,9 @@
         <div class="mb-3">
             <label for="formFile" class="form-label">Добавьте изображение для поиска</label>
             <input class="form-control" type="file" id="formFile" name="file">
+            {% if error %}
+                <p>{{error}}</p>
+            {% endif %}
         </div>
         <button type="submit" class="btn btn-secondary">Найти</button>
     </form>

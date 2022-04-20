@@ -48,6 +48,12 @@ class Page(Resource):
             file = args['file'].read()
             image = bytearray(file)
             search_str, width, height = babel.create_str(image)
+            if search_str == 'wrong_pixel':
+                return jsonify(
+                {
+                    'id': search_str
+                }
+            )
             if request_str == 'ex':
                 address = babel.search_exactly(search_str, width, height)
             else:

@@ -66,6 +66,8 @@ class Babel:
         self.volume = 32
         self.page = 410
 
+        self.number_of_pages = len(str(self.alphabet_len ** (self.width * self.height)))
+
         self.digsIndexes = {}
         self.alphabetIndexes = {}
         self.readable_alphabetIndexes = {}
@@ -107,17 +109,19 @@ class Babel:
         st = ''
         for i in range(height):
             for j in range(width):
-                if len(pix[j, i]) == 3:
-                    r, g, b = pix[j, i]
-                    r, g, b = r // (256 // self.number_of_colors), \
-                              g // (256 // self.number_of_colors), \
-                              b // (256 // self.number_of_colors)
+                if not str(pix[j, i]).isdigit():
+                    if len(pix[j, i]) == 3:
+                        r, g, b = pix[j, i]
+                        r, g, b = r // (256 // self.number_of_colors), \
+                                  g // (256 // self.number_of_colors), \
+                                  b // (256 // self.number_of_colors)
+                    else:
+                        r, g, b, h = pix[j, i]
+                        r, g, b = r // (256 // self.number_of_colors), \
+                                  g // (256 // self.number_of_colors), \
+                                  b // (256 // self.number_of_colors)
                 else:
-                    r, g, b, h = pix[j, i]
-                    r, g, b, h = r // (256 // self.number_of_colors), \
-                                 g // (256 // self.number_of_colors), \
-                                 b // (256 // self.number_of_colors), \
-                                 255
+                    return 'wrong_pixel', None, None
                 st += self.used_symbols[r] + self.used_symbols[g] + self.used_symbols[b]
         return st, width, height
 

@@ -1,4 +1,4 @@
-from flask import Flask, make_response
+from flask import Flask, make_response, jsonify
 from requests import get
 from flask import request
 from flask import redirect
@@ -36,12 +36,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-def allowed_file(filename):
-    """ Функция проверки расширения файла """
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
@@ -57,7 +51,8 @@ def home_page():
 @app.route('/information')
 def info():
     """страница с информацией о сайте"""
-    return render_template('info.html', title='Информация')
+    return render_template('info.html', title='Информация', width=babel.width, height=babel.height,
+                           number_of_colors=babel.alphabet_len, number_of_pages=babel.number_of_pages)
 
 
 @app.route('/browse', methods=['POST', 'GET'])
@@ -154,13 +149,20 @@ def random_book():
 @app.route('/search', methods=['POST', 'GET'])
 def search():
     """страница с поиском картинки"""
+    allowed_types = ['png', 'jpg', 'jpeg', 'bmp', 'ico', 'pcc']
     if request.method == 'GET':
         return render_template('search.html', title='Поиск картинки')
     elif request.method == 'POST':
         radio = request.form.get('flexRadioDefault')
         file = request.files['file']
+        if file.filename.split('.')[-1] not in allowed_types:
+            return render_template('search.html', title='Поиск картинки',
+                                   error='Можно использовать только форматы ' + ', '.join(allowed_types))
         id = get(f'http://127.0.0.1:8080/api/page/im/' + ('ex' if radio == 'radio1' else 'n'),
                  files={'file': file}).json()['id']
+        if id == 'wrong_pixel':
+            return render_template('search.html', title='Поиск картинки',
+                                   error='В изображении не должно быть прозрачных пикселей')
         return redirect(f'/image{id}')
 
 
@@ -209,6 +211,16 @@ def sign_in():
 def logout():
     logout_user()
     return redirect("/")
+
+
+# @app.errorhandler(500)
+# def not_found(error):
+#     return render_template('error.html')
+#
+#
+# @app.errorhandler(404)
+# def not_found(error):
+#     return render_template('error.html')
 
 
 if __name__ == '__main__':
