@@ -7,3 +7,4 @@ reparse==3.0
 requests==2.27.1
 SQLAlchemy==1.4.35
 WTForms==3.0.1
+numpy==1.21.6
