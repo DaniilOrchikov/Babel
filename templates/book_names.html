@@ -2,7 +2,7 @@
 {% block content %}
 <div class="book-names-style height-style-percent">
     <div class="book-names-form">
-        <form class="form-style font-style" action="" method="post">
+        <form class="book-form-style font-style" action="" method="post">
             <div class="book-names-disabled"><input class="form-control" type="text" name="room" value="{{room}}"
                     placeholder="{{room}}" aria-label="Disabled input example" readonly></div>
             <div class="book-names-disabled"><input class="form-control" type="text" name="wall" value="{{wall}}"
@@ -10,15 +10,16 @@
             <div class="book-names-disabled"><input class="form-control" type="text" name="shelf" value="{{shelf}}"
                     placeholder="{{shelf}}" aria-label="Disabled input example" readonly></div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault"  value="1" checked>
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" value="1"
+                    checked>
                 <label class="form-check-label" for="flexRadioDefault1">
                     1 - {{books_list[0]}}
-                    <!--имя первой книги, она будет изначально отмечена, чтобы не возникало ошибки-->
                 </label>
             </div>
             {% for i in range(2, volume + 1) %}
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="{{i}}">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+                    value="{{i}}">
                 <label class="form-check-label" for="flexRadioDefault1">
                     {{i}} - {{books_list[i - 1]}}
                 </label>
@@ -28,8 +29,10 @@
                 <input type="text" class="form-control" placeholder="Введите номер страницы: 1 - 410" aria-label="3"
                     aria-describedby="basic-addon2" name="page">
             </div>
-            <button type="submit" class="btn btn-secondary" name="next" value="next">Открыть книгу</button>
+            <div class="message">{{ message }}</div>
+            <!--сюда ставляем наше сообщение, которое передается, как в browse-->
             <button type="submit" class="btn btn-secondary" name="previous" value="previous">Предыдущая форма</button>
+            <button type="submit" class="btn btn-secondary" name="next" value="next">Открыть книгу</button>
         </form>
     </div>
 </div>

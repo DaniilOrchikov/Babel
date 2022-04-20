@@ -1,4 +1,3 @@
-import os
 from flask import Flask, make_response
 from requests import get
 from flask import request
