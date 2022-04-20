@@ -217,7 +217,6 @@
     padding: 5px 10px;
 }
 
-
 blockquote {
     margin: 0;
     background: white;
@@ -524,7 +523,6 @@ blockquote cite {
     color: #fff;
 }
 
-/* The alert message box */
 .alert {
     padding: 20px;
     color: #fff;
@@ -539,7 +537,6 @@ blockquote cite {
     background-color: #82523c;
 }
 
-/* The close button */
 .closebtn {
     margin-left: 15px;
     color: white;
@@ -553,6 +550,11 @@ blockquote cite {
 
 .closebtn:hover {
     color: black;
+}
+
+.book-names-form {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 @font-face {

@@ -26,19 +26,6 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="input-group mb-3 form-browse">
-            <label class="input-group-text" for="inputGroupSelect01">Book</label>
-            <select class="form-select" id="inputGroupSelect03" name="book">
-                {% for i in range(1, 33) %}
-                <option value="{{i}}">{{i}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="input-group mb-3 form-browse">
-            <input type="text" class="form-control" placeholder="Введите номер страницы: 1 - 410" aria-label="3"
-                aria-describedby="basic-addon2" name="page">
-        </div>
-        <div class="message">{{ message_page }}</div>
         <div class="message">{{ message }}</div>
         <button type="submit" class="btn btn-dark">Отправить</button>
     </form>

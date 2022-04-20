@@ -36,12 +36,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-def allowed_file(filename):
-    """ Функция проверки расширения файла """
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
@@ -62,7 +56,7 @@ def info():
 
 @app.route('/browse', methods=['POST', 'GET'])
 def browse():
-    """основная страница с библиотекой -> переход в def image()"""
+    """страница с библиотекой"""
     if request.method == 'GET':
         return render_template('browse.html', title='Библиотека')
     elif request.method == 'POST':
@@ -92,6 +86,14 @@ def browse():
         id = get(f'http://127.0.0.1:8080/api/page/a/1',
                  json={'str': f'{room}-{wall}-{shelf}-{book}-{page}'}).json()['id']
         return redirect(f'/image{id}')
+
+
+@app.route('/books', methods=['POST', 'GET'])
+def book_names():
+    """страница со списком названий книг"""
+    if request.method == 'GET':
+        books_list = []  # список имен книг, которые мы получаем после browse
+        return render_template('book_names.html', title='Информация', books_list=books_list)
 
 
 @app.route('/image<string:id>', methods=['POST', 'GET'])
@@ -141,6 +143,7 @@ def image(id):
 
 @app.route('/random_book')
 def random_book():
+    """случайная книга"""
     id = get(f'http://127.0.0.1:8080/api/random_page').json()['id']
     return redirect(f'/image{id}')
 
@@ -159,7 +162,8 @@ def account():
 
 
 @app.route('/sign_up', methods=['GET', 'POST'])
-def sign_up():  # регистрация
+def sign_up():
+    """регистрация"""
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
@@ -185,6 +189,7 @@ def sign_up():  # регистрация
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
+    """авторизация"""
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
@@ -202,9 +207,11 @@ def sign_in():
 def rise_error():
     return render_template('rise_error.html')
 
+
 @app.route('/logout')
 @login_required
 def logout():
+    """выход из личного аккаунта"""
     logout_user()
     return redirect("/")
 
