@@ -7,7 +7,7 @@
     </div>
     <p class="link-located"><a class="text-style font-style link-style browse-page" href="/browse">Browse</a></p>
     {% if current_user.is_authenticated %}
-    <p class="link-located"><a class=" text-style font-style link-style info-page" href="/search">Search</a></p>
+    <p class="link-located"><a class=" text-style font-style link-style info-page" href="/account">Search</a></p>
     {% else %}
     <p class="link-located"><a class=" text-style font-style link-style info-page" href="/">Search</a></p>
     {% endif %}
@@ -21,7 +21,7 @@
     {% else %}
     <div class="alert alert-out">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        Зарегистрируйтесь или авторизуйтесь, чтобы воспользоваться функцией поиска "search".
+        После регистрации Вам в личном кабинете будет доступна функция поиска - "search".
     </div>
     {% endif %}
 </div>
