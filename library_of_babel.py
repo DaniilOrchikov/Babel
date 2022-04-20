@@ -96,14 +96,14 @@ class Babel:
         im = Image.open(io.BytesIO(image))
         width, height = im.size
         if width > self.width and height > self.height:
-            im = im.resize((self.width, self.height), Image.NEAREST)
-        else:
-            width, height = im.size
-            if width > self.width:
-                im = im.resize((self.width, height), Image.NEAREST)
-            width, height = im.size
-            if height > self.height:
-                im = im.resize((width, self.height), Image.NEAREST)
+            if width / self.width > height / self.height:
+                im = im.resize((self.width, int(self.width / width * height)), Image.NEAREST)
+            else:
+                im = im.resize((int(self.height / height * width), self.height), Image.NEAREST)
+        elif width > self.width:
+                im = im.resize((self.width, int(self.width / width * height)), Image.NEAREST)
+        elif height > self.height:
+                im = im.resize((int(self.height / height * width), self.height), Image.NEAREST)
         pix = im.load()
         width, height = im.size
         st = ''

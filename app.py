@@ -1,11 +1,11 @@
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response
 from requests import get
 from flask import request
 from flask import redirect
 from data import db_session
 from data.quick_saves import QuickSaves
 from data.users import User
-from flask_restful import Api, reqparse
+from flask_restful import Api
 from flask import render_template
 from library_of_babel import babel
 from forms.user import LoginForm
@@ -24,16 +24,15 @@ api.add_resource(BookList, '/api/book_list/<string:address>')
 api.add_resource(Page, '/api/page/<string:r_type>/<string:request_str>')
 api.add_resource(RandomPage, '/api/random_page')
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 scale = 2.2
 
 
 def main():
     db_session.global_init("db/data_base.db")
     app.run(port=8080, host='127.0.0.1')
-
-
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 
 @login_manager.user_loader
@@ -204,6 +203,7 @@ def sign_in():
 def rise_error():
     return render_template('rise_error.html')
 
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -211,14 +211,14 @@ def logout():
     return redirect("/")
 
 
-# @app.errorhandler(500)
-# def not_found(error):
-#     return render_template('error.html')
-#
-#
-# @app.errorhandler(404)
-# def not_found(error):
-#     return render_template('error.html')
+@app.errorhandler(500)
+def not_found(error):
+    return render_template('rise_error.html', error='500')
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('rise_error.html', error='404')
 
 
 if __name__ == '__main__':
