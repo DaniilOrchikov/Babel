@@ -2,25 +2,26 @@
 {% block content %}
 <div class="book-names-style height-style-percent">
     <div class="book-names-form">
-        <form class="form-style font-style" action="" method="post">
-            <div class="book-names-disabled"><input class="form-control" type="text"
-                    placeholder="Здесь будет номер комнаты" aria-label="Disabled input example" disabled></div>
-            <div class="book-names-disabled"><input class="form-control" type="text"
-                    placeholder="Здесь будет номер стеллажа" aria-label="Disabled input example" disabled></div>
-            <div class="book-names-disabled"><input class="form-control" type="text"
-                    placeholder="Здесь будет номер стеллажа" aria-label="Disabled input example" disabled></div>
+        <form class="book-form-style font-style" action="" method="post">
+            <div class="book-names-disabled"><input class="form-control" type="text" name="room" value="{{room}}"
+                    placeholder="{{room}}" aria-label="Disabled input example" readonly></div>
+            <div class="book-names-disabled"><input class="form-control" type="text" name="wall" value="{{wall}}"
+                    placeholder="{{wall}}" aria-label="Disabled input example" readonly></div>
+            <div class="book-names-disabled"><input class="form-control" type="text" name="shelf" value="{{shelf}}"
+                    placeholder="{{shelf}}" aria-label="Disabled input example" readonly></div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" checked>
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" value="1"
+                    checked>
                 <label class="form-check-label" for="flexRadioDefault1">
-                    1 книга
-                    <!--имя первой книги, она будет изначально отмечена, чтобы не возникало ошибки-->
+                    1 - {{books_list[0]}}
                 </label>
             </div>
             {% for i in range(2, 33) %}
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+                    value="{{i}}">
                 <label class="form-check-label" for="flexRadioDefault1">
-                    {{i}} - имя книги
+                    {{i}} - {{books_list[i - 1]}}
                 </label>
             </div>
             {% endfor %}
@@ -28,8 +29,10 @@
                 <input type="text" class="form-control" placeholder="Введите номер страницы: 1 - 410" aria-label="3"
                     aria-describedby="basic-addon2" name="page">
             </div>
-            <button type="submit" class="btn btn-secondary" value="next">Открыть книгу</button>
-            <button type="submit" class="btn btn-secondary" value="previous">Предыдущая форма</button>
+            <div class="message">{{ message }}</div>
+            <!--сюда ставляем наше сообщение, которое передается, как в browse-->
+            <button type="submit" class="btn btn-secondary" name="previous" value="previous">Предыдущая форма</button>
+            <button type="submit" class="btn btn-secondary" name="next" value="next">Открыть книгу</button>
         </form>
     </div>
 </div>

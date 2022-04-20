@@ -1,5 +1,3 @@
-import base64
-
 import werkzeug.datastructures
 from flask import jsonify
 from flask_restful import Resource, reqparse
@@ -18,36 +16,26 @@ parser_1.add_argument('str')
 
 
 class BookList(Resource):
-    def get(self, address):
-        titles = [babel.get_title(address + '-' + str(i)) for i in range(babel.volume)]
+    def get(self):
+        args = parser_1.parse_args()
+        file = args['str']
+        titles = [babel.get_title(file + '-' + str(i)) for i in range(1, babel.volume + 1)]
         return jsonify({'titles': titles})
 
 
 class Page(Resource):
-    # def post(self, r_type, request_str):
-    #     args = parser.parse_args()
-    #     file = args['file'].read()
-    #
-    #     image = bytearray(file)
-    #     search_str, width, height = babel.create_str(image)
-    #     address = babel.search(search_str, width, height)
-    #     title = babel.get_title(address)
-    #     image = babel.create_im(address)
-    #     image = image.decode()
-    #     return jsonify(
-    #         {
-    #             'image': f'data:image/jpeg;base64,{image}',
-    #             'address': address,
-    #             'title': title
-    #         }
-    #     )
-
     def get(self, r_type, request_str):
         if r_type == 'im':
             args = parser.parse_args()
             file = args['file'].read()
             image = bytearray(file)
             search_str, width, height = babel.create_str(image)
+            if search_str == 'wrong_pixel':
+                return jsonify(
+                {
+                    'id': search_str
+                }
+            )
             if request_str == 'ex':
                 address = babel.search_exactly(search_str, width, height)
             else:
@@ -56,7 +44,7 @@ class Page(Resource):
             image = babel.create_im(address)
             image = image.decode()
 
-            db_sess = db_session.create_session()
+            db_sess = db_session.create_session_image_base()
             quick_save = QuickSaves(image=f'data:image/jpeg;base64,{image}',
                                     address=address,
                                     title=title)
@@ -74,7 +62,7 @@ class Page(Resource):
             image = babel.create_im(address)
             image = image.decode()
 
-            db_sess = db_session.create_session()
+            db_sess = db_session.create_session_image_base()
             quick_save = QuickSaves(image=f'data:image/jpeg;base64,{image}',
                                     address=address,
                                     title=title)
@@ -94,7 +82,7 @@ class RandomPage(Resource):
         image = babel.create_im(address)
         image = image.decode()
 
-        db_sess = db_session.create_session()
+        db_sess = db_session.create_session_image_base()
         quick_save = QuickSaves(image=f'data:image/jpeg;base64,{image}',
                                 address=address,
                                 title=title)
