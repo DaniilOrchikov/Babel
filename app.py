@@ -134,24 +134,18 @@ def image(id):
         return res
 
 
-@app.route('/account')
-def personal_account():
-    """страница с личным кабинетом: все сохраненные фотографии"""
-    return render_template('account.html', title='Личный аккаунт')
-
-
 @app.route('/random_book')
 def random_book():
     id = get(f'http://127.0.0.1:8080/api/random_page').json()['id']
     return redirect(f'/image{id}')
 
 
-@app.route('/search', methods=['POST', 'GET'])
-def search():
+@app.route('/account', methods=['POST', 'GET'])
+def account():
     """страница с поиском картинки"""
     allowed_types = ['png', 'jpg', 'jpeg', 'bmp', 'ico', 'pcc']
     if request.method == 'GET':
-        return render_template('search.html', title='Поиск картинки')
+        return render_template('account.html', title='Поиск картинки')
     elif request.method == 'POST':
         radio = request.form.get('flexRadioDefault')
         file = request.files['file']
@@ -205,6 +199,10 @@ def sign_in():
                                form=form)
     return render_template('sign_in.html', title='Авторизация', form=form)
 
+
+@app.route('/error')
+def rise_error():
+    return render_template('rise_error.html')
 
 @app.route('/logout')
 @login_required
