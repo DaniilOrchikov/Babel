@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, make_response
 from requests import get
 from flask import request
@@ -87,17 +89,14 @@ def browse():
             return render_template('book_names.html', title='Информация', books_list=books_list, room=room, wall=wall,
                                    shelf=shelf, volume=babel.volume)
         else:
-            print(f'{room}-{wall}-{shelf}-{book}-{page}')
             books_list = get(f'http://' + request.host + '/api/book_list',
                              json={'str': f'{room}-{wall}-{shelf}'}).json()['titles']
             if previous is not None:
                 return render_template('browse.html', title='Библиотека')
-            if not (0 < int(page) < 411) or not (page.isdigit()):
+            if not (0 < int(page) < 411) or not (page.isdigit()) or page is None:
                 return render_template('book_names.html', title='Информация', books_list=books_list, room=room,
-                                       wall=wall, shelf=shelf, volume=babel.volume)
-            elif page is None:
-                return render_template('book_names.html', title='Информация', books_list=books_list, room=room,
-                                       wall=wall, shelf=shelf, volume=babel.volume)
+                                       wall=wall, shelf=shelf, volume=babel.volume,
+                                       message='Некорректный номер страницы')
             id = get(f'http://' + request.host + '/api/page/a/1',
                      json={'str': f'{room}-{wall}-{shelf}-{book}-{page}'}).json()['id']
             return redirect(f'/image{id}')
