@@ -35,6 +35,10 @@
     font-family: 'Lato', sans-serif;
 }
 
+.book-names-style {
+    background-color: #754c2d;
+}
+
 .header-top {
     display: flex;
     flex-direction: row;
@@ -555,6 +559,11 @@ blockquote cite {
 .book-names-form {
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.book-names-disabled {
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 @font-face {
