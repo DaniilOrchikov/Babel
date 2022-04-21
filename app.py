@@ -28,7 +28,7 @@ api.add_resource(RandomPage, '/api/random_page')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-scale = 2.2
+scale = 2.9
 
 
 def main():
