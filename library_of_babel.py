@@ -50,9 +50,9 @@ class Babel:
         self.number_of_colors = len(self.used_symbols)
         # create_alf(self.used_symbols) # не забывать вставлять пробельный символ
 
-        with open('alphabet.txt', 'r') as f:
+        with open('static/txt/alphabet.txt', 'r') as f:
             self.alphabet = self.digs = f.read().split()
-        with open('readable_alphabet.txt', 'r', encoding='utf-8') as f:
+        with open('static/txt/readable_alphabet.txt', 'r', encoding='utf-8') as f:
             self.readable_alphabet = f.read().split("'")
         self.alphabet.insert(0, self.alphabet.pop())
         self.alphabet_len = len(self.alphabet)
