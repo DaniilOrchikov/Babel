@@ -28,7 +28,7 @@ api.add_resource(RandomPage, '/api/random_page')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-scale = 2.9
+scale = 4
 
 
 def main():
@@ -92,7 +92,11 @@ def browse():
                              json={'str': f'{room}-{wall}-{shelf}'}).json()['titles']
             if previous is not None:
                 return render_template('browse.html', title='Библиотека')
-            if not (0 < int(page) < 411) or not (page.isdigit()) or page is None:
+            if not page:
+                return render_template('book_names.html', title='Информация', books_list=books_list, room=room,
+                                       wall=wall, shelf=shelf, volume=babel.volume,
+                                       message='Некорректный номер страницы')
+            if not (0 < int(page) < 411) or not (page.isdigit()):
                 return render_template('book_names.html', title='Информация', books_list=books_list, room=room,
                                        wall=wall, shelf=shelf, volume=babel.volume,
                                        message='Некорректный номер страницы')

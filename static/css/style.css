@@ -582,6 +582,10 @@ blockquote cite {
     text-align:  center;
 }
 
+.message_page {
+    color:#000;
+}
+
 @font-face {
     /* Гарнитура шрифта */
     font-family: 'Lato';
